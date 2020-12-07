@@ -7,6 +7,12 @@
 :root {
   font-family: 'Lato', sans-serif;
   font-size: 62.5%;
+
+  --primary-color: #1C5DC4;
+  --primary-gradient: linear-gradient(to right, #2094CA, #1C5DC4);
+  --secondary-gradient: linear-gradient(to right, #FFFFFF, #C3CFD9);
+
+  --transition-duration: 0.15s;
 }
 
 body {
