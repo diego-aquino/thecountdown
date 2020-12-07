@@ -1,0 +1,58 @@
+.header {
+  padding: 2rem 2.8rem;
+
+  display: flex;
+  justify-content: space-between;
+
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+
+  text-decoration: none;
+  color: #000000;
+
+  transition: opacity var(--transition-duration);
+}
+
+.logoContainer:hover {
+  opacity: 0.8;
+}
+
+.logoIcon {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.logoTitle {
+  margin-left: 0.8rem;
+
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navbarItem {
+  padding: 0.3rem 0.5rem;
+
+  font-size: 1.8rem;
+  color: #000000;
+  text-decoration: none;
+
+  transition: opacity var(--transition-duration);
+}
+
+.navbarItem:hover {
+  opacity: 0.7;
+}
+
+.navbarItem + .navbarItem {
+  margin-left: 0.9rem;
+}

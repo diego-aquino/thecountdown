@@ -1,0 +1,10 @@
+.inlineLink {
+  color: #0C3F90;
+  text-decoration: none;
+  transition: color var(--transition-duration);
+}
+
+.inlineLink:hover {
+  color: #1C5DC4;
+  text-decoration: underline;
+}
