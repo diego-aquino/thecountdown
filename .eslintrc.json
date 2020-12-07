@@ -32,6 +32,7 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "paths": ["src"],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
@@ -91,6 +92,9 @@
       "args": "after-used",
       "ignoreRestSiblings": false
     }],
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+
+    // Next.js-specific rules
+    "jsx-a11y/anchor-is-valid": "off"
   }
 }
