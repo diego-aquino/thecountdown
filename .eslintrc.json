@@ -1,0 +1,96 @@
+{
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "airbnb",
+    "prettier/standard",
+    "prettier/react"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "tsx": true,
+      "ts": true
+    },
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "globals": {
+    "JSX": "readonly"
+  },
+  "rules": {
+    "prettier/prettier": "error",
+
+    "import/extensions": [1, { "css": "always" }],
+    "import/no-unresolved": "error",
+
+    "react/jsx-props-no-spreading": 0,
+    "react/jsx-filename-extension": [1, {
+      "extensions": [
+        ".jsx",
+        ".tsx"
+      ]
+    }],
+    "react/prop-types": "off",
+    "react/no-unused-prop-types": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "@typescript-eslint/no-use-before-define": ["error"],
+
+    "indent": ["error", 2, {
+      "ignoredNodes": [
+        "JSXElement",
+        "JSXElement *",
+        "JSXElement > *",
+        "JSXAttribute",
+        "JSXIdentifier",
+        "JSXNamespacedName",
+        "JSXMemberExpression",
+        "JSXSpreadAttribute",
+        "JSXExpressionContainer",
+        "JSXOpeningElement",
+        "JSXClosingElement",
+        "JSXText",
+        "JSXEmptyExpression",
+        "JSXSpreadChild"
+      ],
+      "ignoreComments": true
+    }],
+    "comma-dangle": ["warn", "always-multiline"],
+    "implicit-arrow-linebreak": "off",
+    "no-plusplus": "off",
+    "object-curly-newline": ["warn", {
+      "ObjectExpression": { "multiline": true },
+      "ObjectPattern": { "multiline": true },
+      "ImportDeclaration": { "multiline": true },
+      "ExportDeclaration": { "multiline": true }
+    }],
+    "no-unused-vars": ["warn", {
+      "vars": "all",
+      "args": "after-used",
+      "ignoreRestSiblings": false
+    }],
+    "no-use-before-define": "off"
+  }
+}
