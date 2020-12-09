@@ -2,11 +2,7 @@ import React from 'react';
 
 export interface StaticTime {
   refersToNow: false;
-  year: number;
-  month: number;
-  day?: number;
-  hours?: number;
-  minutes?: number;
+  date: Date;
 }
 
 export interface InstantTime {
