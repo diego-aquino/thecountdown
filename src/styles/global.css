@@ -20,3 +20,11 @@
 body {
   font-size: 1.6rem;
 }
+
+button,
+input,
+textarea,
+select {
+  font-family: 'Lato', sans-serif;
+  color: var(--primary-color-dark);
+}
