@@ -1,16 +1,6 @@
 import { Time, DeltaTime } from 'typings';
 import { randomInt } from 'utils/random';
 
-export function getDateObjectFrom(time: Time): Date {
-  if (time.refersToNow) {
-    return new Date();
-  }
-
-  const { year, month, day = 1, hours = 0, minutes = 0 } = time;
-
-  return new Date(year, month, day, hours, minutes);
-}
-
 export function calculateDeltaTime(startTime: Date, endTime: Date): DeltaTime {
   const startTimeInMilliseconds = startTime.getTime();
   const endTimeInMilliseconds = endTime.getTime();

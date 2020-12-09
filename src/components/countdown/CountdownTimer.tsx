@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 
 import { Time, DeltaTime } from 'typings';
-import { getDateObjectFrom, calculateDeltaTime } from 'utils/date';
+import { calculateDeltaTime } from 'utils/date';
 import { numberToFormattedString } from 'utils/format';
 import styles from 'styles/components/countdown/CountdownTimer.module.css';
 
@@ -38,10 +38,12 @@ const CountdownTimer: FC<Props> = ({ startTime, endTime }) => {
 
   const updateDisplayTime = useCallback(
     (newStartTime: Time, newEndTime: Time) => {
-      const startTimeAsDate = getDateObjectFrom(newStartTime);
-      const endTimeAsDate = getDateObjectFrom(newEndTime);
+      const startTimeDate = newStartTime.refersToNow
+        ? new Date()
+        : newStartTime.date;
+      const endTimeDate = newEndTime.refersToNow ? new Date() : newEndTime.date;
 
-      const deltaTime = calculateDeltaTime(startTimeAsDate, endTimeAsDate);
+      const deltaTime = calculateDeltaTime(startTimeDate, endTimeDate);
       const formattedDeltaTime = formatDeltaTime(deltaTime);
 
       setDisplayTime(formattedDeltaTime);
