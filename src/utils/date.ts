@@ -1,5 +1,4 @@
 import { Time, DeltaTime } from 'typings';
-import { randomInt } from 'utils/random';
 
 export function calculateDeltaTime(startTime: Date, endTime: Date): DeltaTime {
   const startTimeInMilliseconds = startTime.getTime();
@@ -47,45 +46,33 @@ export function getNumberOfDaysInMonth(month: number, year: number): number {
 }
 
 interface RandomTimeInFutureOptions {
-  baseYear: number;
-  yearVariation?: number;
+  dayVariation?: number;
+  hoursVariation?: number;
+  minutesVariation?: number;
 }
 
 export function getRandomTimeInFuture(
-  options?: RandomTimeInFutureOptions,
+  options: RandomTimeInFutureOptions = {},
 ): Time {
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  const currentMonth = now.getMonth();
-  const currentDay = now.getDate();
+  const placeholderDate = new Date();
 
-  const { baseYear = currentYear, yearVariation = 1 } = options || {};
+  const currentDate = placeholderDate.getDate();
+  const currentHours = placeholderDate.getHours();
+  const currentMinutes = placeholderDate.getMinutes();
+
+  const { minutesVariation = currentMinutes * 3 } = options;
+  const { hoursVariation = currentHours + (minutesVariation % 24) } = options;
+  const { dayVariation = currentDate * 10 + hoursVariation } = options;
+
+  placeholderDate.setDate(currentDate + dayVariation);
+  placeholderDate.setHours(currentHours + hoursVariation);
+  placeholderDate.setMinutes(currentMinutes + minutesVariation);
+  placeholderDate.setSeconds(0);
 
   const timeInFuture: Time = {
     refersToNow: false,
-    year: randomInt(baseYear, baseYear + yearVariation + 1),
-    month: 0,
-    day: 1,
-    hours: randomInt(0, 24),
-    minutes: randomInt(0, 60),
+    date: placeholderDate,
   };
-
-  if (timeInFuture.year === currentYear) {
-    timeInFuture.month = randomInt(currentMonth, 12);
-  } else {
-    timeInFuture.month = randomInt(0, 12);
-  }
-
-  const numberOfDaysInMonth = getNumberOfDaysInMonth(
-    timeInFuture.month,
-    timeInFuture.year as number,
-  );
-
-  if (timeInFuture.month === currentMonth) {
-    timeInFuture.day = randomInt(currentDay, numberOfDaysInMonth + 1);
-  } else {
-    timeInFuture.day = randomInt(0, numberOfDaysInMonth + 1);
-  }
 
   return timeInFuture;
 }
