@@ -1,142 +1,125 @@
-import React, { FC, useCallback, useRef, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
+import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
+import clsx from 'clsx';
 
-import { Time, StaticTime } from 'typings';
+import { Time } from 'typings';
 import { Arrow, Calendar, Hourglass, XMark } from 'assets';
 import { getRandomTimeInFuture } from 'utils/date';
 import styles from 'styles/components/countdown/MainCountdown.module.css';
 import CountdownTimer from './CountdownTimer';
 
-interface TimeInputRefGroup {
-  timeInputRef: React.RefObject<HTMLInputElement>;
-  dateInputRef: React.RefObject<HTMLInputElement>;
+interface ActiveStartDateChangeEvent {
+  activeStartDate: Date;
 }
 
 const MainCountdown: FC = () => {
   const [startTime, setStartTime] = useState<Time>({ refersToNow: true });
   const [endTime, setEndTime] = useState<Time>(getRandomTimeInFuture());
 
-  const startTimeInputRefGroup = useRef<TimeInputRefGroup>({
-    timeInputRef: useRef<HTMLInputElement>(null),
-    dateInputRef: useRef<HTMLInputElement>(null),
-  });
-  const endTimeInputRefGroup = useRef<TimeInputRefGroup>({
-    timeInputRef: useRef<HTMLInputElement>(null),
-    dateInputRef: useRef<HTMLInputElement>(null),
-  });
-
-  const getUpdatedTimeBasedOnInput = useCallback(
-    (previousTime: Time, inputType: string, inputValue: string) => {
-      const newTime = { ...previousTime, refersToNow: false } as StaticTime;
-
-      if (inputType === 'time') {
-        const [hours, minutes] = inputValue.split(':').map((value) => +value);
-        newTime.hours = hours;
-        newTime.minutes = minutes;
+  const updateTimeBasedOnInputEntry = useCallback(
+    (
+      setStateFunction: React.Dispatch<React.SetStateAction<Time>>,
+      entry: Date | null,
+    ) => {
+      if (entry) {
+        setStateFunction({ refersToNow: false, date: entry });
       } else {
-        const [year, month, day] = inputValue.split('-').map((value) => +value);
-        newTime.year = year;
-        newTime.month = month - 1;
-        newTime.day = day;
+        setStateFunction({ refersToNow: true });
       }
-
-      return newTime;
     },
     [],
   );
 
-  const updateTime = useCallback(
-    (
-      setStateFunction: React.Dispatch<React.SetStateAction<Time>>,
-      event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-      const { type: inputType, value: inputValue } = event.target;
-
-      setStateFunction((previousTime) =>
-        getUpdatedTimeBasedOnInput(previousTime, inputType, inputValue),
-      ); // eslint-disable-line
+  const handleStartTimeChange = useCallback(
+    (entry: Date | null) => {
+      updateTimeBasedOnInputEntry(setStartTime, entry);
     },
-    [getUpdatedTimeBasedOnInput],
+    [updateTimeBasedOnInputEntry],
   );
 
-  const clearTimeEntry = useCallback(
-    (
-      setStateFunction: React.Dispatch<React.SetStateAction<Time>>,
-      timeInputRefGroup: React.MutableRefObject<TimeInputRefGroup>,
-    ) => {
-      setStateFunction({ refersToNow: true });
+  const handleActiveStartTimeChange = useCallback(
+    ({ activeStartDate }: ActiveStartDateChangeEvent) =>
+      updateTimeBasedOnInputEntry(setStartTime, activeStartDate),
+    [updateTimeBasedOnInputEntry],
+  );
 
-      const { timeInputRef, dateInputRef } = timeInputRefGroup.current;
-
-      if (timeInputRef.current) {
-        timeInputRef.current.value = '';
-      }
-      if (dateInputRef.current) {
-        dateInputRef.current.value = '';
-      }
+  const handleEndTimeChange = useCallback(
+    (entry: Date | null) => {
+      updateTimeBasedOnInputEntry(setEndTime, entry);
     },
-    [],
+    [updateTimeBasedOnInputEntry],
+  );
+
+  const handleActiveEndTimeChange = useCallback(
+    ({ activeStartDate: activeEndDate }: ActiveStartDateChangeEvent) =>
+      updateTimeBasedOnInputEntry(setEndTime, activeEndDate),
+    [updateTimeBasedOnInputEntry],
   );
 
   return (
     <div className={styles.mainCountdown}>
-      <form className={styles.timeForm}>
+      <form className={styles.timeForm} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.startTimeInputContainer}>
-          <Calendar className={styles.calendarIcon} />
-          <input
-            ref={startTimeInputRefGroup.current.timeInputRef}
-            className={styles.startHoursAndMinuteInput}
-            type="time"
-            onChange={(e) => updateTime(setStartTime, e)}
-          />
-          <div className={styles.separator} />
-          <input
-            ref={startTimeInputRefGroup.current.dateInputRef}
-            className={styles.startDateInput}
-            type="date"
-            onChange={(e) => updateTime(setStartTime, e)}
-          />
+          <button
+            className={clsx(
+              styles.nowLabelContainer,
+              !startTime.refersToNow && styles.hidden,
+            )}
+            type="button"
+            onClick={() =>
+              setStartTime({ refersToNow: false, date: new Date() })
+            }
+          >
+            <Calendar className={styles.calendarIcon} />
+            <h4 className={styles.nowLabel}>Now</h4>
+          </button>
 
-          {!startTime.refersToNow && (
-            <button
-              type="button"
-              className={styles.clearInput}
-              onClick={() =>
-                clearTimeEntry(setStartTime, startTimeInputRefGroup)
-              }
-            >
-              <XMark className={styles.XMark} />
-            </button>
-          )}
+          <DateTimePicker
+            className={clsx(
+              styles.dateTimePicker,
+              startTime.refersToNow && styles.hidden,
+            )}
+            calendarIcon={<Calendar className={styles.calendarIcon} />}
+            clearIcon={<XMark className={styles.XMark} />}
+            showLeadingZeros
+            value={startTime.refersToNow ? null : startTime.date}
+            activeStartDate={startTime.refersToNow ? null : startTime.date}
+            onChange={handleStartTimeChange}
+            onActiveStartDateChange={handleActiveStartTimeChange}
+          />
         </div>
 
-        <Arrow className={styles.arrowIcon} />
-        <Hourglass className={styles.hourglass} />
+        <div className={styles.middleIconsContainer}>
+          <Arrow className={styles.arrowIcon} />
+          <Hourglass className={styles.hourglass} />
+        </div>
 
         <div className={styles.endTimeInputContainer}>
-          <Calendar className={styles.calendarIcon} />
-          <input
-            ref={endTimeInputRefGroup.current.timeInputRef}
-            className={styles.endHoursAndMinuteInput}
-            type="time"
-            onChange={(e) => updateTime(setEndTime, e)}
-          />
-          <div className={styles.separator} />
-          <input
-            ref={endTimeInputRefGroup.current.dateInputRef}
-            className={styles.endDateInput}
-            type="date"
-            onChange={(e) => updateTime(setEndTime, e)}
-          />
+          <button
+            className={clsx(
+              styles.nowLabelContainer,
+              !endTime.refersToNow && styles.hidden,
+            )}
+            type="button"
+            onClick={() => setEndTime({ refersToNow: false, date: new Date() })}
+          >
+            <Calendar className={styles.calendarIcon} />
+            <h4 className={styles.nowLabel}>Now</h4>
+          </button>
 
-          {!endTime.refersToNow && (
-            <button
-              type="button"
-              className={styles.clearInput}
-              onClick={() => clearTimeEntry(setEndTime, endTimeInputRefGroup)}
-            >
-              <XMark className={styles.XMark} />
-            </button>
-          )}
+          <DateTimePicker
+            className={clsx(
+              styles.dateTimePicker,
+              endTime.refersToNow && styles.hidden,
+            )}
+            calendarIcon={<Calendar className={styles.calendarIcon} />}
+            clearIcon={<XMark className={styles.XMark} />}
+            showLeadingZeros
+            value={endTime.refersToNow ? null : endTime.date}
+            activeStartDate={endTime.refersToNow ? null : endTime.date}
+            onChange={handleEndTimeChange}
+            onActiveStartDateChange={handleActiveEndTimeChange}
+          />
         </div>
       </form>
 
