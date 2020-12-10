@@ -10,6 +10,8 @@
 
   --primary-color: #1C5DC4;
   --primary-color-dark: #072047;
+  --primary-color-dark-high-opacity: rgba(7, 32, 71, 0.9);
+  --primary-color-lowest-opacity: rgba(28, 93, 196, 0.25);
   --primary-gradient: linear-gradient(to right, #2094CA, #1C5DC4);
   --secondary-gradient: linear-gradient(to right, #FFFFFF, #C3CFD9);
   --primary-box-shadow: 0px 0px 4px 1px var(--primary-color);

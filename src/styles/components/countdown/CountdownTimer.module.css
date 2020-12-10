@@ -2,9 +2,16 @@
   margin-top: 6rem;
 
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   color: #1C5DC4;
+}
+
+.timerContainer {
+  display: flex;
+  align-items: flex-end;
 }
 
 .largeTimeSection {
@@ -54,4 +61,25 @@
   font-weight: 500;
   line-height: 2.4rem;
   opacity: 0.8;
+}
+
+.agoFlag {
+  width: 7.5rem;
+  height: 3.4rem;
+  margin-top: 2.4rem;
+  padding: 0.4rem 1.7rem 0.9rem;
+  border-radius: 1.7rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;
+  color: var(--primary-color-dark-high-opacity);
+
+  background-color: var(--primary-color-lowest-opacity);
+}
+
+.agoFlag.hidden {
+  visibility: hidden;
 }

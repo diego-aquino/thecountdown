@@ -1,11 +1,8 @@
 import { Time, DeltaTime } from 'typings';
 
 export function calculateDeltaTime(startTime: Date, endTime: Date): DeltaTime {
-  const startTimeInMilliseconds = startTime.getTime();
-  const endTimeInMilliseconds = endTime.getTime();
-
   const deltaTimeInMilliseconds = Math.abs(
-    endTimeInMilliseconds - startTimeInMilliseconds,
+    endTime.getTime() - startTime.getTime(),
   );
   const deltaTimeInSeconds = Math.floor(deltaTimeInMilliseconds / 1000);
 
@@ -17,11 +14,40 @@ export function calculateDeltaTime(startTime: Date, endTime: Date): DeltaTime {
   const remainingDays = Math.floor(remainingHours / 24);
   const days = remainingDays;
 
-  const isFromPast = startTimeInMilliseconds > endTimeInMilliseconds;
-
-  const deltaTime: DeltaTime = { days, hours, minutes, seconds, isFromPast };
+  const deltaTime: DeltaTime = { days, hours, minutes, seconds };
 
   return deltaTime;
+}
+
+export function isDeltaTimeFromPast(startTime: Time, endTime: Time): boolean {
+  const startTimeWithDate = {
+    refersToNow: startTime.refersToNow,
+    date: startTime.refersToNow ? new Date() : startTime.date,
+  };
+  const endTimeWithDate = {
+    refersToNow: endTime.refersToNow,
+    date: endTime.refersToNow ? new Date() : endTime.date,
+  };
+
+  /* eslint-disable */
+  const timeReferringNow = (
+    (startTimeWithDate.refersToNow && startTimeWithDate)
+    || (endTimeWithDate.refersToNow && endTimeWithDate)
+    || null
+  );
+  const timeReferringStaticTime = (
+    (!startTimeWithDate.refersToNow && startTimeWithDate)
+    || (!endTimeWithDate.refersToNow && endTimeWithDate)
+    || null
+  );
+
+  const isFromPast = Boolean(
+    (timeReferringNow && timeReferringStaticTime)
+    && timeReferringStaticTime.date < timeReferringNow.date
+  );
+  /* eslint-enable */
+
+  return isFromPast;
 }
 
 export function getNumberOfDaysInMonth(month: number, year: number): number {

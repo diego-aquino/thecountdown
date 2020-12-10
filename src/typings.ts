@@ -16,7 +16,6 @@ export interface DeltaTime {
   hours: number;
   minutes: number;
   seconds: number;
-  isFromPast?: boolean;
 }
 
 export type HTMLSvgElementProps = React.SVGProps<SVGSVGElement>;
