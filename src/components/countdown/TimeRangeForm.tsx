@@ -65,8 +65,11 @@ const TimeRangeForm: FC<Props> = ({
           type="button"
           onClick={() => handleStartDateChange(new Date())}
         >
-          <Calendar className={styles.calendarIcon} />
-          Now
+          <h4 className={styles.nowLabel}>
+            <Calendar className={styles.calendarIcon} />
+            Now
+          </h4>
+          <XMark className={styles.XMark} />
         </button>
 
         <DateTimePicker
@@ -100,8 +103,11 @@ const TimeRangeForm: FC<Props> = ({
           type="button"
           onClick={() => handleEndDateChange(new Date())}
         >
-          <Calendar className={styles.calendarIcon} />
-          Now
+          <h4 className={styles.nowLabel}>
+            <Calendar className={styles.calendarIcon} />
+            Now
+          </h4>
+          <XMark className={styles.XMark} />
         </button>
 
         <DateTimePicker
