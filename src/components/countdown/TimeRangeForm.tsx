@@ -1,9 +1,10 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import clsx from 'clsx';
 
 import { Time } from 'typings';
-import { Arrow, Calendar, Hourglass, XMark } from 'assets';
+import { Calendar, Hourglass, XMark } from 'assets';
+import { AnimatedArrow } from 'components/common';
 import styles from 'styles/components/countdown/TimeRangeForm.module.css';
 
 interface ActiveStartDateChangeEvent {
@@ -54,6 +55,13 @@ const TimeRangeForm: FC<Props> = ({
     [handleDateChange, onEndTimeChange],
   );
 
+  const isStartTimeLaterThanEndTime = useMemo(() => {
+    const startDate = startTime.refersToNow ? new Date() : startTime.date;
+    const endDate = endTime.refersToNow ? new Date() : endTime.date;
+
+    return startDate > endDate;
+  }, [startTime, endTime]);
+
   return (
     <form className={styles.timeRangeForm} onSubmit={(e) => e.preventDefault()}>
       <div className={styles.startTimeInputContainer}>
@@ -90,7 +98,14 @@ const TimeRangeForm: FC<Props> = ({
       </div>
 
       <div className={styles.middleIconsContainer}>
-        <Arrow className={styles.arrowIcon} />
+        <AnimatedArrow
+          className={styles.animatedArrow}
+          initialWidth={2}
+          finalWidth={14}
+          animationDuration={0.65}
+          animationDelay={0.1}
+          reversed={isStartTimeLaterThanEndTime}
+        />
         <Hourglass className={styles.hourglass} />
       </div>
 

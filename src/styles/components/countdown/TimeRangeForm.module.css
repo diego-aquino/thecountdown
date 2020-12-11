@@ -62,13 +62,22 @@
 
 .middleIconsContainer {
   position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.arrowIcon {
-  width: 14rem;
-  height: 2.4rem;
-
+.animatedArrow {
   margin: 0 2rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
 }
 
 .hourglass {
