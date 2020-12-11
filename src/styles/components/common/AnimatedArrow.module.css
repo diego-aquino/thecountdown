@@ -1,0 +1,8 @@
+.animatedArrow {
+  display: flex;
+  align-items: center;
+}
+
+.arrowBody {
+  background: var(--primary-gradient);
+}
