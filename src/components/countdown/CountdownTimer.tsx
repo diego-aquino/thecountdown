@@ -1,9 +1,10 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { Time, DeltaTime, HTMLDivElementProps } from 'typings';
 import { calculateDeltaTime, isDeltaTimeFromPast } from 'utils/date';
 import { numberToFormattedString } from 'utils/format';
+import { useResize } from 'hooks';
 import styles from 'styles/components/countdown/CountdownTimer.module.css';
 
 interface FormattedDeltaTime {
@@ -60,7 +61,6 @@ const CountdownTimer: FC<Props> = ({
     [formatDeltaTime],
   );
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     updateDisplayTime(startTime, endTime);
 
@@ -73,8 +73,60 @@ const CountdownTimer: FC<Props> = ({
     }
   }, [startTime, endTime, updateDisplayTime]);
 
+  const countdownTimerRef = useRef<HTMLDivElement>(null);
+
+  const calculateMarginTopBasedOnScale = useCallback(
+    (scale: number) => 8 * scale - 3,
+    [],
+  );
+
+  const adaptStylesToAvailableWidth = useCallback(() => {
+    requestAnimationFrame(() => {
+      const countdownTimerElement = countdownTimerRef.current;
+
+      if (!countdownTimerElement) {
+        return;
+      }
+
+      const countdownTimerWidth = countdownTimerElement.clientWidth;
+
+      const parent = countdownTimerElement.parentElement as HTMLElement;
+      const parentStyles = window.getComputedStyle(parent);
+      /* eslint-disable */
+      const parentHorizontalPadding =
+        parseFloat(parentStyles.getPropertyValue('padding-left'))
+        + parseFloat(parentStyles.getPropertyValue('padding-right'));
+      /* eslint-enable */
+
+      const availableWidth = parent.clientWidth - parentHorizontalPadding;
+
+      const newScale = Math.min(availableWidth / countdownTimerWidth, 1);
+      const newMarginTop = `${calculateMarginTopBasedOnScale(newScale)}rem`;
+
+      const newTransformValue = `scale(${newScale})`;
+      const currentTransformValue = countdownTimerElement.style.transform;
+
+      if (newTransformValue !== currentTransformValue) {
+        countdownTimerElement.style.marginTop = newMarginTop;
+        countdownTimerElement.style.transform = newTransformValue;
+      }
+    });
+  }, [calculateMarginTopBasedOnScale]);
+
+  useResize(adaptStylesToAvailableWidth);
+
+  useEffect(adaptStylesToAvailableWidth, [
+    startTime,
+    endTime,
+    adaptStylesToAvailableWidth,
+  ]);
+
   return (
-    <div className={clsx(styles.countdownTimer, className)} {...rest}>
+    <div
+      ref={countdownTimerRef}
+      className={clsx(styles.countdownTimer, className)}
+      {...rest}
+    >
       <div className={styles.timerContainer}>
         <div className={styles.largeTimeSection}>
           <h1 className={styles.largeTimeSectionCount}>{displayTime?.days}</h1>
