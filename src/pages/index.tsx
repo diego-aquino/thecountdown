@@ -1,19 +1,15 @@
 import React, { FC } from 'react';
-import Head from 'next/head';
 
-import Logo from '../assets/Logo';
+import { Layout } from 'components/common';
+import { MainCountdown } from 'components/countdown';
+import styles from 'styles/components/pages/Home.module.css';
 
 const Home: FC = () => (
-  <div>
-    <Head>
-      <title>TheCountdown</title>
-    </Head>
-
-    <main>
-      TheCountdown
-      <Logo />
+  <Layout pageTitle="TheCountdown">
+    <main className={styles.main}>
+      <MainCountdown />
     </main>
-  </div>
+  </Layout>
 );
 
 export default Home;

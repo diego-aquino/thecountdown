@@ -1,12 +1,15 @@
 import React, { FC } from 'react';
 
-const Logo: FC = () => (
+import { HTMLSvgElementProps } from 'typings';
+
+const Logo: FC<HTMLSvgElementProps> = ({ ...rest }) => (
   <svg
     width="40"
     height="40"
     viewBox="0 0 40 40"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...rest}
   >
     <circle
       cx="20"
