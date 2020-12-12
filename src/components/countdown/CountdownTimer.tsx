@@ -1,10 +1,10 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
+import clsx from 'clsx';
 
-import { Time, DeltaTime } from 'typings';
+import { Time, DeltaTime, HTMLDivElementProps } from 'typings';
 import { calculateDeltaTime, isDeltaTimeFromPast } from 'utils/date';
 import { numberToFormattedString } from 'utils/format';
 import styles from 'styles/components/countdown/CountdownTimer.module.css';
-import clsx from 'clsx';
 
 interface FormattedDeltaTime {
   days: string;
@@ -14,12 +14,17 @@ interface FormattedDeltaTime {
   isFromPast?: boolean;
 }
 
-interface Props {
+interface Props extends HTMLDivElementProps {
   startTime: Time;
   endTime: Time;
 }
 
-const CountdownTimer: FC<Props> = ({ startTime, endTime }) => {
+const CountdownTimer: FC<Props> = ({
+  startTime,
+  endTime,
+  className,
+  ...rest
+}) => {
   const [displayTime, setDisplayTime] = useState<FormattedDeltaTime>();
 
   const formatDeltaTime = useCallback(
@@ -69,7 +74,7 @@ const CountdownTimer: FC<Props> = ({ startTime, endTime }) => {
   }, [startTime, endTime, updateDisplayTime]);
 
   return (
-    <div className={styles.countdownTimer}>
+    <div className={clsx(styles.countdownTimer, className)} {...rest}>
       <div className={styles.timerContainer}>
         <div className={styles.largeTimeSection}>
           <h1 className={styles.largeTimeSectionCount}>{displayTime?.days}</h1>

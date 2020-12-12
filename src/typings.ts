@@ -34,3 +34,8 @@ export type HTMLImageElementProps = React.DetailedHTMLProps<
   React.ImgHTMLAttributes<HTMLImageElement>,
   HTMLImageElement
 >;
+
+export type HTMLFormElementProps = React.DetailedHTMLProps<
+  React.FormHTMLAttributes<HTMLFormElement>,
+  HTMLFormElement
+>;

@@ -2,7 +2,7 @@ import React, { FC, useCallback, useMemo } from 'react';
 import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import clsx from 'clsx';
 
-import { Time } from 'typings';
+import { HTMLFormElementProps, Time } from 'typings';
 import { Calendar, Hourglass, XMark } from 'assets';
 import { AnimatedArrow } from 'components/common';
 import styles from 'styles/components/countdown/TimeRangeForm.module.css';
@@ -13,7 +13,7 @@ interface ActiveStartDateChangeEvent {
 
 type onChangeTimeCallback = (newStartTime: Time) => void;
 
-interface Props {
+interface Props extends HTMLFormElementProps {
   startTime: Time;
   endTime: Time;
   onStartTimeChange?: onChangeTimeCallback;
@@ -25,6 +25,9 @@ const TimeRangeForm: FC<Props> = ({
   endTime,
   onStartTimeChange,
   onEndTimeChange,
+  className,
+  onSubmit = (e) => e.preventDefault(),
+  ...rest
 }) => {
   const handleDateChange = useCallback(
     (onChange: onChangeTimeCallback, newDate: Date | null) => {
@@ -63,7 +66,11 @@ const TimeRangeForm: FC<Props> = ({
   }, [startTime, endTime]);
 
   return (
-    <form className={styles.timeRangeForm} onSubmit={(e) => e.preventDefault()}>
+    <form
+      className={clsx(styles.timeRangeForm, className)}
+      onSubmit={onSubmit}
+      {...rest}
+    >
       <div className={styles.startTimeInputContainer}>
         <button
           className={clsx(
