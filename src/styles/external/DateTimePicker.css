@@ -159,7 +159,8 @@
   min-width: 2.1rem;
 }
 .react-datetime-picker__inputGroup__input.react-datetime-picker__inputGroup__year {
-  min-width: 4.1rem;
+  min-width: 0;
+  text-align: left;
 }
 .react-datetime-picker__inputGroup__input::-webkit-outer-spin-button,
 .react-datetime-picker__inputGroup__input::-webkit-inner-spin-button {
