@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { HTMLFormElementProps, Time } from 'typings';
 import { Calendar, Hourglass, XMark } from 'assets';
 import { AnimatedArrow } from 'components/common';
+import { useScreenBreakpoint } from 'hooks';
 import styles from 'styles/components/countdown/TimeRangeForm.module.css';
 
 interface ActiveStartDateChangeEvent {
@@ -13,11 +14,14 @@ interface ActiveStartDateChangeEvent {
 
 type onChangeTimeCallback = (newStartTime: Time) => void;
 
+type FormLayout = 'horizontal' | 'vertical';
+
 interface Props extends HTMLFormElementProps {
   startTime: Time;
   endTime: Time;
   onStartTimeChange?: onChangeTimeCallback;
   onEndTimeChange?: onChangeTimeCallback;
+  layoutBreakpoint?: number;
 }
 
 const TimeRangeForm: FC<Props> = ({
@@ -25,10 +29,16 @@ const TimeRangeForm: FC<Props> = ({
   endTime,
   onStartTimeChange,
   onEndTimeChange,
+  layoutBreakpoint = 0,
   className,
   onSubmit = (e) => e.preventDefault(),
   ...rest
 }) => {
+  const layout = useScreenBreakpoint<FormLayout>(
+    ['vertical', 'horizontal'],
+    [layoutBreakpoint],
+  );
+
   const handleDateChange = useCallback(
     (onChange: onChangeTimeCallback, newDate: Date | null) => {
       const newTime: Time = newDate
@@ -67,7 +77,11 @@ const TimeRangeForm: FC<Props> = ({
 
   return (
     <form
-      className={clsx(styles.timeRangeForm, className)}
+      className={clsx(
+        styles.timeRangeForm,
+        layout === 'vertical' && styles.verticalLayout,
+        className,
+      )}
       onSubmit={onSubmit}
       {...rest}
     >
@@ -107,8 +121,7 @@ const TimeRangeForm: FC<Props> = ({
       <div className={styles.middleIconsContainer}>
         <AnimatedArrow
           className={styles.animatedArrow}
-          initialWidth={2}
-          finalWidth={14}
+          finalWidth={layout === 'horizontal' ? 14 : 6}
           animationDuration={0.65}
           animationDelay={0.1}
           reversed={isStartTimeLaterThanEndTime}

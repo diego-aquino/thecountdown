@@ -17,6 +17,7 @@ const MainCountdown: FC = () => {
         endTime={endTime}
         onStartTimeChange={setStartTime}
         onEndTimeChange={setEndTime}
+        layoutBreakpoint={880}
       />
       <CountdownTimer startTime={startTime} endTime={endTime} />
     </div>
