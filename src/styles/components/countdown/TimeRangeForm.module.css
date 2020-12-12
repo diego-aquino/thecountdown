@@ -4,6 +4,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  color: var(--primary-color-dark);
 }
 
 .timeRangeForm.verticalLayout {
@@ -88,14 +90,6 @@
   margin: 0 2rem;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  } to {
-    opacity: 1;
-  }
-}
-
 .hourglass {
   width: 2.7rem;
   height: 2.7rem;
@@ -168,7 +162,6 @@
   font-size: 1.8rem;
   font-weight: 400;
   text-align: left;
-  color: var(--primary-color-dark);
 }
 
 .nowLabel > .calendarIcon {
