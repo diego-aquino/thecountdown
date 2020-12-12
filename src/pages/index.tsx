@@ -5,7 +5,7 @@ import { MainCountdown } from 'components/countdown';
 import styles from 'styles/components/pages/Home.module.css';
 
 const Home: FC = () => (
-  <Layout pageTitle="TheCountdown">
+  <Layout className={styles.layout} pageTitle="TheCountdown">
     <main className={styles.main}>
       <MainCountdown />
     </main>
