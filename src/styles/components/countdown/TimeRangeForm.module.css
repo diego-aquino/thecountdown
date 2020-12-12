@@ -4,6 +4,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  color: var(--primary-color-dark);
+}
+
+.timeRangeForm.verticalLayout {
+  flex-direction: column;
 }
 
 .startTimeInputContainer,
@@ -41,6 +47,14 @@
   background-image: var(--primary-gradient);
 }
 
+.timeRangeForm.verticalLayout > .startTimeInputContainer {
+  margin-bottom: 3.5rem;
+}
+
+.timeRangeForm.verticalLayout > .endTimeInputContainer {
+  margin-top: 3.5rem;
+}
+
 .dateTimePicker {
   font-size: 1.4rem;
 }
@@ -68,16 +82,12 @@
   align-items: center;
 }
 
-.animatedArrow {
-  margin: 0 2rem;
+.timeRangeForm.verticalLayout .middleIconsContainer {
+  transform: rotate(90deg);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  } to {
-    opacity: 1;
-  }
+.animatedArrow {
+  margin: 0 2rem;
 }
 
 .hourglass {
@@ -95,9 +105,19 @@
   box-shadow: 0px 0px 10px 14px #FFFFFF;
 }
 
+.timeRangeForm.verticalLayout .hourglass {
+  width: 2.3rem;
+  height: 2.3rem;
+
+  transform: translate(-50%, -50%) rotate(-90deg);
+
+  box-shadow: 0px 0px 4px 3px #FFFFFF;
+}
+
 .nowLabelContainer {
   padding: 0.5rem 1rem;
   border: none;
+  border-radius: 0.4rem;
 
   position: absolute;
   top: 0;
@@ -142,7 +162,6 @@
   font-size: 1.8rem;
   font-weight: 400;
   text-align: left;
-  color: var(--primary-color-dark);
 }
 
 .nowLabel > .calendarIcon {

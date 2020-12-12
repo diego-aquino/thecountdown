@@ -159,7 +159,8 @@
   min-width: 2.1rem;
 }
 .react-datetime-picker__inputGroup__input.react-datetime-picker__inputGroup__year {
-  min-width: 4.1rem;
+  min-width: 0;
+  text-align: left;
 }
 .react-datetime-picker__inputGroup__input::-webkit-outer-spin-button,
 .react-datetime-picker__inputGroup__input::-webkit-inner-spin-button {
@@ -175,16 +176,10 @@
   margin-left: calc(-0.54em - 2px);
   padding-left: calc(2px +  0.54em);
 }
-/* .react-datetime-picker__calendar {
-  border-top-left-radius: 0 !important;
-} */
-/* .react-datetime-picker__calendar .react-calendar {
-  border-top-left-radius: 0 !important;
-} */
 .react-datetime-picker__clock {
   font-family: inherit;
   width: 190px;
-  height: 190px;
+  height: 190px !important;
   padding: 20px;
   border: 0;
   border-radius: 0.4rem;
@@ -212,9 +207,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.react-datetime-picker__clock {
-  border-top-right-radius: 0;
 }
 .react-datetime-picker__inputGroup__leadingZero {
   margin-left: 2px;
