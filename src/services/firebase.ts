@@ -16,11 +16,16 @@ const firebaseApp =
     ? firebase.initializeApp(firebaseConfig)
     : firebase.app();
 
-const isRunningInProduction = process.env.NODE_ENV === 'production';
 const isClient = typeof window !== 'undefined';
 
-if (isRunningInProduction && isClient) {
-  firebase.analytics();
+if (isClient) {
+  const isRunningInProduction =
+    process.env.NODE_ENV === 'production' &&
+    window.location.hostname === 'thecountdown.vercel.app';
+
+  if (isRunningInProduction) {
+    firebase.analytics();
+  }
 }
 
 export default firebaseApp;
