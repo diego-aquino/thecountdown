@@ -95,10 +95,18 @@ const TimeRangeForm: FC<Props> = ({
           onClick={() => handleStartDateChange(new Date())}
         >
           <h4 className={styles.nowLabel}>
-            <Calendar className={styles.calendarIcon} />
+            <Calendar
+              id="startTimeCalendarIcon"
+              title="Calendar"
+              className={styles.calendarIcon}
+            />
             Now
           </h4>
-          <XMark className={styles.XMark} />
+          <XMark
+            id="clearStartTimeNowLabel"
+            title="Clear"
+            className={styles.XMark}
+          />
         </button>
 
         <DateTimePicker
@@ -106,8 +114,20 @@ const TimeRangeForm: FC<Props> = ({
             styles.dateTimePicker,
             startTime.refersToNow && styles.hidden,
           )}
-          calendarIcon={<Calendar className={styles.calendarIcon} />}
-          clearIcon={<XMark className={styles.XMark} />}
+          calendarIcon={
+            <Calendar
+              id="openStartTimeCalendar"
+              title="Open calendar"
+              className={styles.calendarIcon}
+            />
+          }
+          clearIcon={
+            <XMark
+              id="clearStartTimeInputs"
+              title="Clear"
+              className={styles.XMark}
+            />
+          }
           showLeadingZeros
           value={startTime.refersToNow ? null : startTime.date}
           activeStartDate={startTime.refersToNow ? null : startTime.date}
@@ -139,10 +159,18 @@ const TimeRangeForm: FC<Props> = ({
           onClick={() => handleEndDateChange(new Date())}
         >
           <h4 className={styles.nowLabel}>
-            <Calendar className={styles.calendarIcon} />
+            <Calendar
+              id="endTimeCalendarIcon"
+              title="Calendar"
+              className={styles.calendarIcon}
+            />
             Now
           </h4>
-          <XMark className={styles.XMark} />
+          <XMark
+            id="clearEndTimeNowLabel"
+            title="Clear"
+            className={styles.XMark}
+          />
         </button>
 
         <DateTimePicker
@@ -150,8 +178,20 @@ const TimeRangeForm: FC<Props> = ({
             styles.dateTimePicker,
             endTime.refersToNow && styles.hidden,
           )}
-          calendarIcon={<Calendar className={styles.calendarIcon} />}
-          clearIcon={<XMark className={styles.XMark} />}
+          calendarIcon={
+            <Calendar
+              id="openEndTimeCalendar"
+              title="Open calendar"
+              className={styles.calendarIcon}
+            />
+          }
+          clearIcon={
+            <XMark
+              id="clearEndTimeInputs"
+              title="Clear"
+              className={styles.XMark}
+            />
+          }
           showLeadingZeros
           value={endTime.refersToNow ? null : endTime.date}
           activeStartDate={endTime.refersToNow ? null : endTime.date}

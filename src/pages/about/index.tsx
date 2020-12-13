@@ -47,19 +47,31 @@ const About: FC<Props> = ({ userData }) => {
             className={styles.socialLink}
             href="https://github.com/diego-aquino"
           >
-            <GitHub className={styles.socialLinkIcon} />
+            <GitHub
+              id="socialLinkGithub"
+              title="GitHub"
+              className={styles.socialLinkIcon}
+            />
           </ExternalLink>
           <ExternalLink
             className={styles.socialLink}
             href="https://linkedin.com/in/diego-aquino"
           >
-            <LinkedIn className={styles.socialLinkIcon} />
+            <LinkedIn
+              id="socialLinkLinkedIn"
+              title="LinkedIn"
+              className={styles.socialLinkIcon}
+            />
           </ExternalLink>
           <ExternalLink
             className={styles.socialLink}
             href="mailto:diegocruzdeaquino@gmail.com"
           >
-            <Gmail className={styles.socialLinkIcon} />
+            <Gmail
+              id="socialLinkMail"
+              title="Mail"
+              className={styles.socialLinkIcon}
+            />
           </ExternalLink>
         </div>
       </div>

@@ -20,6 +20,11 @@ export interface DeltaTime {
 
 export type HTMLSvgElementProps = React.SVGProps<SVGSVGElement>;
 
+export interface HTMLSvgElementAccessibleProps extends HTMLSvgElementProps {
+  title: string;
+  id: string;
+}
+
 export type HTMLDivElementProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
