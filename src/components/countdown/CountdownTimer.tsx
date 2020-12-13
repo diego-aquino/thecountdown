@@ -92,11 +92,9 @@ const CountdownTimer: FC<Props> = ({
 
       const parent = countdownTimerElement.parentElement as HTMLElement;
       const parentStyles = window.getComputedStyle(parent);
-      /* eslint-disable */
       const parentHorizontalPadding =
-        parseFloat(parentStyles.getPropertyValue('padding-left'))
-        + parseFloat(parentStyles.getPropertyValue('padding-right'));
-      /* eslint-enable */
+        parseFloat(parentStyles.getPropertyValue('padding-left')) +
+        parseFloat(parentStyles.getPropertyValue('padding-right'));
 
       const availableWidth = parent.clientWidth - parentHorizontalPadding;
 

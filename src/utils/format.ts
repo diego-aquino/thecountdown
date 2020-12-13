@@ -26,11 +26,10 @@ export function toFormattedString(
     numberOfFillRepetitions[fillDirection] = remainingLength;
   }
 
-  const formattedNumber = (// eslint-disable-line prettier/prettier
-    fillWith.repeat(numberOfFillRepetitions.left) // eslint-disable-line prettier/prettier
-    + numberAsString // eslint-disable-line prettier/prettier
-    + fillWith.repeat(numberOfFillRepetitions.right) // eslint-disable-line prettier/prettier
-  );
+  const formattedNumber =
+    fillWith.repeat(numberOfFillRepetitions.left) +
+    numberAsString +
+    fillWith.repeat(numberOfFillRepetitions.right);
 
   return formattedNumber;
 }
