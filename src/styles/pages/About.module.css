@@ -1,4 +1,6 @@
 .about {
+  padding: 1.5rem;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,14 +16,14 @@
 }
 
 .name {
-  margin-top: 0.8rem;
+  margin-top: 1rem;
 
   font-weight: 500;
-  font-size: 3.8rem;
+  font-size: 3.4rem;
 }
 
 .role {
-  margin-top: 0.7rem;
+  margin-top: 0.8rem;
 
   font-weight: 400;
   font-size: 2.1rem;
@@ -40,11 +42,13 @@
 }
 
 .bio {
+  max-width: 50rem;
   margin-top: 2.1rem;
 
   color: #455775;
   font-weight: 400;
   font-size: 1.8rem;
+  text-align: center;
 }
 
 .social {
