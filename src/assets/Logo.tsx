@@ -4,6 +4,7 @@ import { HTMLSvgElementProps } from 'typings';
 
 const Logo: FC<HTMLSvgElementProps> = ({ ...rest }) => (
   <svg
+    role="img"
     width="40"
     height="40"
     viewBox="0 0 40 40"

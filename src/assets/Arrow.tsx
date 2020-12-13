@@ -4,6 +4,7 @@ import { HTMLSvgElementProps } from 'typings';
 
 const Arrow: FC<HTMLSvgElementProps> = ({ ...rest }) => (
   <svg
+    role="img"
     width="8"
     height="12"
     viewBox="0 0 8 12"
