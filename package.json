@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "clsx": "^1.1.1",
+    "firebase": "^8.2.0",
     "next": "10.0.3",
     "react": "17.0.1",
     "react-datetime-picker": "^3.0.4",
