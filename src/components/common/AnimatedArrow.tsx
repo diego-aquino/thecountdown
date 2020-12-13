@@ -62,29 +62,36 @@ const AnimatedArrow: FC<Props> = ({
   );
 
   const arrowBodyRef = useRef<HTMLDivElement>(null);
+  /* eslint-disable prettier/prettier */
+  const arrowBodyTransitionValue = useMemo(
+    () =>
+      `width ${animationDuration}s `
+      + `${animationDelay}s cubic-bezier(0.2, 1.07, 0.81, 0.99)`,
+    [animationDuration, animationDelay],
+  );
+  /* eslint-enable prettier/prettier */
 
   useEffect(() => {
-    const arrowBody = arrowBodyRef.current;
+    requestAnimationFrame(() => {
+      const arrowBody = arrowBodyRef.current;
 
-    if (arrowBody) {
-      const previousTransitionStyles = window
-        .getComputedStyle(arrowBody)
-        .getPropertyValue('transition');
+      if (arrowBody) {
+        arrowBody.style.transition = '';
+        arrowBody.style.width = `${initialBodyWidth}rem`;
 
-      arrowBody.style.transition = '';
-      arrowBody.style.width = `${initialBodyWidth}rem`;
-
-      requestAnimationFrame(() => {
-        arrowBody.style.transition = previousTransitionStyles;
-        arrowBody.style.width = `${finalBodyWidth}rem`;
-      });
-    }
+        requestAnimationFrame(() => {
+          arrowBody.style.transition = arrowBodyTransitionValue;
+          arrowBody.style.width = `${finalBodyWidth}rem`;
+        });
+      }
+    });
   }, [
     animationDuration,
     animationDelay,
     reversed,
     initialBodyWidth,
     finalBodyWidth,
+    arrowBodyTransitionValue,
   ]);
 
   return (
@@ -98,14 +105,11 @@ const AnimatedArrow: FC<Props> = ({
     >
       <div
         ref={arrowBodyRef}
-        className={styles.arrowBody}
+        className={clsx(styles.arrowBody, reversed && styles.reversed)}
         style={{
           width: `${initialBodyWidth}rem`,
           height: `${arrowHeadStrokeWidth}rem`,
-          transform: reversed ? 'rotate(180deg)' : '',
-          transitionDuration: `${animationDuration}s`,
-          transitionDelay: `${animationDelay}s`,
-          transitionTimingFunction: 'cubic-bezier(.2,1.07,.81,.99)',
+          transition: arrowBodyTransitionValue,
         }}
       />
       <Arrow

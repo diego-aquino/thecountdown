@@ -6,3 +6,7 @@
 .arrowBody {
   background: var(--primary-gradient);
 }
+
+.reversed {
+  transform: rotate(180deg);
+}
