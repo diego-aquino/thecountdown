@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { Layout } from 'components/common';
 import { MainCountdown } from 'components/countdown';
-import styles from 'styles/components/pages/Home.module.css';
+import styles from 'styles/pages/Home.module.css';
 
 const Home: FC = () => (
   <Layout className={styles.layout} pageTitle="TheCountdown">
