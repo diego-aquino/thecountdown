@@ -1,0 +1,80 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--primary-color-dark);
+
+  flex: 1;
+}
+
+.avatarImage {
+  border-radius: 50%;
+}
+
+.name {
+  margin-top: 0.8rem;
+
+  font-weight: 500;
+  font-size: 3.8rem;
+}
+
+.role {
+  margin-top: 0.7rem;
+
+  font-weight: 400;
+  font-size: 2.1rem;
+
+  opacity: 0.75;
+}
+
+.separator {
+  width: 4.2rem;
+  height: 0.4rem;
+  border: none;
+  border-radius: 0.2rem;
+  margin-top: 1.6rem;
+
+  background: var(--primary-gradient);
+}
+
+.bio {
+  margin-top: 2.1rem;
+
+  color: #455775;
+  font-weight: 400;
+  font-size: 1.8rem;
+}
+
+.social {
+  margin-top: 3.4rem;
+
+  display: flex;
+  align-items: center;
+}
+
+.socialLink {
+  fill: var(--primary-color-dark);
+  transition: opacity var(--transition-duration);
+}
+
+.socialLink:hover {
+  opacity: 0.85;
+}
+
+.socialLink:active {
+  opacity: 0.65;
+}
+
+.socialLink + .socialLink {
+  margin-left: 1.4rem;
+}
+
+.circularLoading {
+  width: 3.2rem;
+  height: 3.2rem;
+  margin: 0 auto;
+
+  flex: 1;
+}
