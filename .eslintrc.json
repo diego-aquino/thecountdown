@@ -9,8 +9,9 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
     "airbnb",
+    "prettier",
+    "prettier/@typescript-eslint",
     "prettier/standard",
     "prettier/react"
   ],

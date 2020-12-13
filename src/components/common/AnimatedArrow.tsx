@@ -62,14 +62,12 @@ const AnimatedArrow: FC<Props> = ({
   );
 
   const arrowBodyRef = useRef<HTMLDivElement>(null);
-  /* eslint-disable prettier/prettier */
   const arrowBodyTransitionValue = useMemo(
     () =>
-      `width ${animationDuration}s `
-      + `${animationDelay}s cubic-bezier(0.2, 1.07, 0.81, 0.99)`,
+      `width ${animationDuration}s ` +
+      `${animationDelay}s cubic-bezier(0.2, 1.07, 0.81, 0.99)`,
     [animationDuration, animationDelay],
   );
-  /* eslint-enable prettier/prettier */
 
   useEffect(() => {
     requestAnimationFrame(() => {

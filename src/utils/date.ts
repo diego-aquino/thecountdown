@@ -29,23 +29,20 @@ export function isDeltaTimeFromPast(startTime: Time, endTime: Time): boolean {
     date: endTime.refersToNow ? new Date() : endTime.date,
   };
 
-  /* eslint-disable */
-  const timeReferringNow = (
-    (startTimeWithDate.refersToNow && startTimeWithDate)
-    || (endTimeWithDate.refersToNow && endTimeWithDate)
-    || null
-  );
-  const timeReferringStaticTime = (
-    (!startTimeWithDate.refersToNow && startTimeWithDate)
-    || (!endTimeWithDate.refersToNow && endTimeWithDate)
-    || null
-  );
+  const timeReferringNow =
+    (startTimeWithDate.refersToNow && startTimeWithDate) ||
+    (endTimeWithDate.refersToNow && endTimeWithDate) ||
+    null;
+  const timeReferringStaticTime =
+    (!startTimeWithDate.refersToNow && startTimeWithDate) ||
+    (!endTimeWithDate.refersToNow && endTimeWithDate) ||
+    null;
 
   const isFromPast = Boolean(
-    (timeReferringNow && timeReferringStaticTime)
-    && timeReferringStaticTime.date < timeReferringNow.date
+    timeReferringNow &&
+      timeReferringStaticTime &&
+      timeReferringStaticTime.date < timeReferringNow.date,
   );
-  /* eslint-enable */
 
   return isFromPast;
 }
