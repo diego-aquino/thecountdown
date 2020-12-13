@@ -6,7 +6,9 @@ function useScreenBreakpoint<IntervalLabel>(
   intervalLabels: IntervalLabel[],
   breakpoints: number[],
 ): IntervalLabel {
-  const [label, setLabel] = useState<IntervalLabel>(intervalLabels[0]);
+  const [label, setLabel] = useState<IntervalLabel>(
+    intervalLabels[intervalLabels.length - 1],
+  );
 
   const searchRightmostValueLowerThan = useCallback(
     (upperLimit: number, searchingArray: number[]) => {
