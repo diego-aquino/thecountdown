@@ -23,14 +23,20 @@ const MainCountdown: FC = () => {
 
   return (
     <div className={styles.mainCountdown}>
-      <TimeRangeForm
-        startTime={startTime}
-        endTime={endTime}
-        onStartTimeChange={setStartTime}
-        onEndTimeChange={setEndTime}
-        layoutBreakpoint={880}
-      />
-      <CountdownTimer startTime={startTime} endTime={endTime} />
+      {startTime && endTime ? (
+        <>
+          <TimeRangeForm
+            startTime={startTime}
+            endTime={endTime}
+            onStartTimeChange={setStartTime}
+            onEndTimeChange={setEndTime}
+            layoutBreakpoint={880}
+          />
+          <CountdownTimer startTime={startTime} endTime={endTime} />
+        </>
+      ) : (
+        <CircularLoading />
+      )}
     </div>
   );
 };
