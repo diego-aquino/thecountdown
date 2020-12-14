@@ -69,34 +69,36 @@ export function getNumberOfDaysInMonth(month: number, year: number): number {
   return numberOfDaysInMonth[month];
 }
 
-interface FutureTimeOptions {
+interface RandomTimeInFutureOptions {
   dayVariation?: number;
   hoursVariation?: number;
+  minutesVariation?: number;
 }
 
-const futureTimeMinutes = 23;
-const futureTimeSeconds = 0;
+export function getRandomTimeInFuture(
+  options: RandomTimeInFutureOptions = {},
+): Time {
+  const placeholderDate = new Date();
 
-export function getFutureTime(options: FutureTimeOptions = {}): Time {
-  const now = new Date();
+  const currentDate = placeholderDate.getDate();
+  const currentHours = placeholderDate.getHours();
+  const currentMinutes = placeholderDate.getMinutes();
 
-  const currentDate = now.getDate();
-  const currentHours = now.getHours();
+  const { minutesVariation = currentMinutes * 3 } = options;
+  const { hoursVariation = currentHours + (minutesVariation % 24) } = options;
+  const { dayVariation = currentDate * 10 + hoursVariation } = options;
 
-  const { dayVariation = 0, hoursVariation = 0 } = options;
+  placeholderDate.setDate(currentDate + dayVariation);
+  placeholderDate.setHours(currentHours + hoursVariation);
+  placeholderDate.setMinutes(currentMinutes + minutesVariation);
+  placeholderDate.setSeconds(0);
 
-  const futureDate = new Date();
-  futureDate.setDate(currentDate + dayVariation);
-  futureDate.setHours(currentHours + hoursVariation);
-  futureDate.setMinutes(futureTimeMinutes);
-  futureDate.setSeconds(futureTimeSeconds);
-
-  const futureTime: Time = {
+  const timeInFuture: Time = {
     refersToNow: false,
-    date: futureDate,
+    date: placeholderDate,
   };
 
-  return futureTime;
+  return timeInFuture;
 }
 
 type TimeEntryName = 'startTime' | 'endTime';

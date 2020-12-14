@@ -2,26 +2,24 @@ import React, { FC, useEffect, useState } from 'react';
 
 import { Time } from 'typings';
 import {
-  getFutureTime,
+  getRandomTimeInFuture,
   getLastTimeEntryFor,
   saveTimeEntryLocally,
 } from 'utils/date';
+import { CircularLoading } from 'components/common';
 import styles from 'styles/components/countdown/MainCountdown.module.css';
 import CountdownTimer from './CountdownTimer';
 import TimeRangeForm from './TimeRangeForm';
 
 const defaultStartTime: Time = { refersToNow: true };
-const defaultEndTime: Time = getFutureTime({
-  dayVariation: 48,
-  hoursVariation: 11,
-});
+const defaultEndTime: Time = getRandomTimeInFuture();
 
 const lastStartTimeEntry = getLastTimeEntryFor('startTime');
 const lastEndTimeEntry = getLastTimeEntryFor('endTime');
 
 const MainCountdown: FC = () => {
-  const [startTime, setStartTime] = useState<Time>(defaultStartTime);
-  const [endTime, setEndTime] = useState<Time>(defaultEndTime);
+  const [startTime, setStartTime] = useState<Time | null>(null);
+  const [endTime, setEndTime] = useState<Time | null>(null);
 
   useEffect(() => {
     setStartTime(lastStartTimeEntry || defaultStartTime);
@@ -29,23 +27,33 @@ const MainCountdown: FC = () => {
   }, []);
 
   useEffect(() => {
-    saveTimeEntryLocally('startTime', startTime);
+    if (startTime) {
+      saveTimeEntryLocally('startTime', startTime);
+    }
   }, [startTime]);
 
   useEffect(() => {
-    saveTimeEntryLocally('endTime', endTime);
+    if (endTime) {
+      saveTimeEntryLocally('endTime', endTime);
+    }
   }, [endTime]);
 
   return (
     <div className={styles.mainCountdown}>
-      <TimeRangeForm
-        startTime={startTime}
-        endTime={endTime}
-        onStartTimeChange={setStartTime}
-        onEndTimeChange={setEndTime}
-        layoutBreakpoint={880}
-      />
-      <CountdownTimer startTime={startTime} endTime={endTime} />
+      {startTime && endTime ? (
+        <>
+          <TimeRangeForm
+            startTime={startTime}
+            endTime={endTime}
+            onStartTimeChange={setStartTime}
+            onEndTimeChange={setEndTime}
+            layoutBreakpoint={880}
+          />
+          <CountdownTimer startTime={startTime} endTime={endTime} />
+        </>
+      ) : (
+        <CircularLoading />
+      )}
     </div>
   );
 };
