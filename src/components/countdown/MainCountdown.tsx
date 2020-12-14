@@ -1,14 +1,19 @@
 import React, { FC, useState } from 'react';
 
 import { Time } from 'typings';
-import { getRandomTimeInFuture } from 'utils/date';
+import { getFutureTime } from 'utils/date';
 import styles from 'styles/components/countdown/MainCountdown.module.css';
 import CountdownTimer from './CountdownTimer';
 import TimeRangeForm from './TimeRangeForm';
 
 const MainCountdown: FC = () => {
   const [startTime, setStartTime] = useState<Time>({ refersToNow: true });
-  const [endTime, setEndTime] = useState<Time>(getRandomTimeInFuture());
+  const [endTime, setEndTime] = useState<Time>(
+    getFutureTime({
+      dayVariation: 48,
+      hoursVariation: 11,
+    }),
+  );
 
   return (
     <div className={styles.mainCountdown}>
