@@ -1,4 +1,5 @@
 import { Time, DeltaTime } from 'typings';
+import { retrieveFromLocalStorage, saveToLocalStorage } from './local';
 
 export function calculateDeltaTime(startTime: Date, endTime: Date): DeltaTime {
   const deltaTimeInMilliseconds = Math.abs(
@@ -98,4 +99,37 @@ export function getRandomTimeInFuture(
   };
 
   return timeInFuture;
+}
+
+type TimeEntryName = 'startTime' | 'endTime';
+type JSONSafeTimeEntryValue =
+  | { refersToNow: false; date: string }
+  | { refersToNow: true };
+
+export function getLastTimeEntryFor(entryName: TimeEntryName): Time | null {
+  const valueFromLocalStorage = retrieveFromLocalStorage(entryName);
+  if (!valueFromLocalStorage) {
+    return null;
+  }
+
+  const parsedTimeEntry: JSONSafeTimeEntryValue = JSON.parse(
+    valueFromLocalStorage,
+  );
+
+  const timeEntry: Time = parsedTimeEntry.refersToNow
+    ? { refersToNow: true }
+    : { refersToNow: false, date: new Date(parsedTimeEntry.date) };
+
+  return timeEntry;
+}
+
+export function saveTimeEntryLocally(
+  entryName: TimeEntryName,
+  entryValue: Time,
+): boolean {
+  const safeEntryValue: JSONSafeTimeEntryValue = entryValue.refersToNow
+    ? { refersToNow: true }
+    : { refersToNow: false, date: entryValue.date.toISOString() };
+
+  return saveToLocalStorage(entryName, JSON.stringify(safeEntryValue));
 }
