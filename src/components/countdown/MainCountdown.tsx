@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 import { Time } from 'typings';
 import { CircularLoading } from 'components/common';
-import { getFutureTime } from 'utils/date';
+import { getRandomTimeInFuture } from 'utils/date';
 import styles from 'styles/components/countdown/MainCountdown.module.css';
 import CountdownTimer from './CountdownTimer';
 import TimeRangeForm from './TimeRangeForm';
@@ -13,12 +13,7 @@ const MainCountdown: FC = () => {
 
   useEffect(() => {
     setStartTime({ refersToNow: true });
-    setEndTime(
-      getFutureTime({
-        dayVariation: 48,
-        hoursVariation: 11,
-      }),
-    );
+    setEndTime(getRandomTimeInFuture());
   }, []);
 
   return (
