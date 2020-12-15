@@ -12,41 +12,6 @@
   flex-direction: column;
 }
 
-.startTimeInputContainer,
-.endTimeInputContainer {
-  padding: 0.5rem 0.8rem;
-  border-radius: 0.4rem;
-
-  display: flex;
-  align-items: center;
-  position: relative;
-
-  background-color: #FFFFFF;
-  transition: box-shadow var(--transition-duration);
-}
-
-.startTimeInputContainer:focus-within,
-.endTimeInputContainer:focus-within {
-  box-shadow: var(--primary-box-shadow);
-}
-
-.startTimeInputContainer:before,
-.endTimeInputContainer:before {
-  content: '';
-
-  position: absolute;
-  z-index: -1;
-  top: -0.1rem;
-  left: -0.1rem;
-  width: calc(100% + 0.2rem);
-  height: calc(100% + 0.2rem);
-
-  border-radius: 0.5rem;
-
-  background-color: var(--primary-color);
-  background-image: var(--primary-gradient);
-}
-
 .timeRangeForm.verticalLayout > .startTimeInputContainer {
   margin-bottom: 3.5rem;
 }
@@ -55,26 +20,7 @@
   margin-top: 3.5rem;
 }
 
-.dateTimePicker {
-  font-size: 1.4rem;
-}
-
-.dateTimePicker.hidden {
-  visibility: hidden;
-}
-
-.calendarIcon {
-  width: 2.3rem;
-  height: 2.3rem;
-}
-
-.XMark {
-  width: 1.6rem;
-  height: 1.6rem;
-  padding: 0.1rem;
-}
-
-.middleIconsContainer {
+.iconsInBetween {
   position: relative;
 
   display: flex;
@@ -82,7 +28,7 @@
   align-items: center;
 }
 
-.timeRangeForm.verticalLayout .middleIconsContainer {
+.timeRangeForm.verticalLayout .iconsInBetween {
   transform: rotate(90deg);
 }
 
@@ -112,58 +58,4 @@
   transform: translate(-50%, -50%) rotate(-90deg);
 
   box-shadow: 0px 0px 4px 3px #FFFFFF;
-}
-
-.nowLabelContainer {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.4rem;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  outline: none;
-
-  background-color: transparent;
-  transition:
-    box-shadow var(--transition-duration),
-    opacity var(--transition-duration);
-}
-
-.nowLabelContainer:hover {
-  cursor: pointer;
-  box-shadow: var(--primary-box-shadow);
-  opacity: 0.85;
-}
-
-.nowLabelContainer:active {
-  box-shadow: 0px 0px 5px 1px var(--primary-color);
-}
-
-.nowLabelContainer.hidden {
-  display: none;
-}
-
-.nowLabel {
-  padding: 0.3rem 0;
-
-  display: flex;
-  align-items: center;
-
-  flex: 1;
-
-  font-size: 1.8rem;
-  font-weight: 400;
-  text-align: left;
-}
-
-.nowLabel > .calendarIcon {
-  margin-right: 0.8rem;
 }
