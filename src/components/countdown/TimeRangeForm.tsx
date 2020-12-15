@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, memo, useMemo } from 'react';
 import clsx from 'clsx';
 
 import { HTMLFormElementProps, Time } from 'typings';
@@ -12,7 +12,27 @@ type FormLayout = 'horizontal' | 'vertical';
 
 type OnChangeTimeCallback = (newTime: Time) => void;
 
-interface Props extends HTMLFormElementProps {
+interface IconsInBetweenProps {
+  layout: FormLayout;
+  shouldReverseArrow: boolean;
+}
+
+const IconsInBetween: FC<IconsInBetweenProps> = memo(
+  ({ layout, shouldReverseArrow }) => (
+    <div className={styles.iconsInBetween}>
+      <AnimatedArrow
+        className={styles.animatedArrow}
+        finalWidth={layout === 'horizontal' ? 14 : 6}
+        animationDuration={0.65}
+        animationDelay={0.1}
+        reversed={shouldReverseArrow}
+      />
+      <Hourglass className={styles.hourglass} />
+    </div>
+  ),
+);
+
+interface TimeRangeFormProps extends HTMLFormElementProps {
   startTime: Time;
   endTime: Time;
   onStartTimeChange?: OnChangeTimeCallback;
@@ -20,7 +40,7 @@ interface Props extends HTMLFormElementProps {
   layoutBreakpoint?: number;
 }
 
-const TimeRangeForm: FC<Props> = ({
+const TimeRangeForm: FC<TimeRangeFormProps> = ({
   startTime,
   endTime,
   onStartTimeChange,
@@ -59,16 +79,10 @@ const TimeRangeForm: FC<Props> = ({
         onTimeChange={onStartTimeChange}
       />
 
-      <div className={styles.middleIconsContainer}>
-        <AnimatedArrow
-          className={styles.animatedArrow}
-          finalWidth={layout === 'horizontal' ? 14 : 6}
-          animationDuration={0.65}
-          animationDelay={0.1}
-          reversed={isStartTimeLaterThanEndTime}
-        />
-        <Hourglass className={styles.hourglass} />
-      </div>
+      <IconsInBetween
+        layout={layout}
+        shouldReverseArrow={isStartTimeLaterThanEndTime}
+      />
 
       <TimeInput
         className={styles.endTimeInput}

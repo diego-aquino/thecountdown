@@ -20,7 +20,7 @@
   margin-top: 3.5rem;
 }
 
-.middleIconsContainer {
+.iconsInBetween {
   position: relative;
 
   display: flex;
@@ -28,7 +28,7 @@
   align-items: center;
 }
 
-.timeRangeForm.verticalLayout .middleIconsContainer {
+.timeRangeForm.verticalLayout .iconsInBetween {
   transform: rotate(90deg);
 }
 
