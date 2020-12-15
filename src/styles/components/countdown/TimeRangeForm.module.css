@@ -12,11 +12,11 @@
   flex-direction: column;
 }
 
-.timeRangeForm.verticalLayout > .startTimeInputContainer {
+.timeRangeForm.verticalLayout > .startTimeInput {
   margin-bottom: 3.5rem;
 }
 
-.timeRangeForm.verticalLayout > .endTimeInputContainer {
+.timeRangeForm.verticalLayout > .endTimeInput {
   margin-top: 3.5rem;
 }
 
