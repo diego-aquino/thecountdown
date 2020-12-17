@@ -8,7 +8,7 @@ const Header: FC = () => (
   <div className={styles.header}>
     <Link href="/">
       <a className={styles.logoContainer}>
-        <Logo className={styles.logoIcon} />
+        <Logo id="logoIcon" title="TheCountdown" className={styles.logoIcon} />
         <h1 className={styles.logoTitle}>TheCountdown</h1>
       </a>
     </Link>
