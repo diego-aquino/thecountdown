@@ -15,6 +15,9 @@ const Layout: FC<Props> = ({ pageTitle, className, children, ...rest }) => (
   <div className={clsx(styles.layout, className)} {...rest}>
     <Head>
       <title>{pageTitle}</title>
+      <meta property="og:title" content={pageTitle} />
+      <meta name="twitter:image:alt" content={pageTitle} />
+      <meta name="twitter:title" content={pageTitle} />
     </Head>
 
     <Header />
