@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 
-import { HTMLSvgElementProps } from 'typings';
+import { HTMLSvgElementAccessibleProps } from 'typings';
 
-const Logo: FC<HTMLSvgElementProps> = ({ ...rest }) => (
+const Logo: FC<HTMLSvgElementAccessibleProps> = ({ title, id, ...rest }) => (
   <svg
+    aria-labelledby={id}
     role="img"
     width="40"
     height="40"
@@ -12,6 +13,7 @@ const Logo: FC<HTMLSvgElementProps> = ({ ...rest }) => (
     xmlns="http://www.w3.org/2000/svg"
     {...rest}
   >
+    <title id={id}>{title}</title>
     <circle
       cx="20"
       cy="20"
