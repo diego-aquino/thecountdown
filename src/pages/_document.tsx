@@ -14,6 +14,11 @@ class GlobalDocument extends Document {
             rel="stylesheet"
           />
           <link rel="icon" href="/favicon.ico" />
+
+          <meta
+            name="google-site-verification"
+            content="tY6Tt0X1inh4u36gOc99yz-HH5w36zXDG95kEy8-2Fc"
+          />
         </Head>
 
         <body>
