@@ -102,18 +102,20 @@ const CountdownTimer: FC<Props> = ({
 
       const availableWidth = parent.clientWidth - parentHorizontalPadding;
 
-      const newScale = Math.min(availableWidth / countdownTimerWidth, 1);
+      const maxScale = layout === 'vertical' ? 0.7 : 1;
+
+      const newScale = Math.min(availableWidth / countdownTimerWidth, maxScale);
       const newHeightValue = `${countdownTimerHeight * newScale}px`;
 
       const newTransformValue = `scale(${newScale})`;
       const currentTransformValue = countdownTimerElement.style.transform;
 
+      countdownTimerElement.style.height = newHeightValue;
       if (newTransformValue !== currentTransformValue) {
         countdownTimerElement.style.transform = newTransformValue;
-        countdownTimerElement.style.height = newHeightValue;
       }
     });
-  }, []);
+  }, [layout]);
 
   useResize(adaptStylesToAvailableWidth);
   useEffect(adaptStylesToAvailableWidth, [
