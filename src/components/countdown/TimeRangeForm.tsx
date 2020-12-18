@@ -4,16 +4,18 @@ import clsx from 'clsx';
 import { HTMLFormElementProps, Time } from 'typings';
 import { Hourglass } from 'assets';
 import { AnimatedArrow } from 'components/common';
-import { useScreenBreakpoint } from 'hooks';
 import styles from 'styles/components/countdown/TimeRangeForm.module.css';
+import { Layout, WidthBasedOnLayout, OnChangeTimeCallback } from './types';
 import TimeInput from './TimeInput';
 
-type FormLayout = 'horizontal' | 'vertical';
-
-type OnChangeTimeCallback = (newTime: Time) => void;
+const arrowWidthFor: WidthBasedOnLayout = {
+  horizontal: 11.5,
+  horizontalNarrow: 7.6,
+  vertical: 5.5,
+};
 
 interface IconsInBetweenProps {
-  layout: FormLayout;
+  layout: Layout;
   shouldReverseArrow: boolean;
 }
 
@@ -22,7 +24,7 @@ const IconsInBetween: FC<IconsInBetweenProps> = memo(
     <div className={styles.iconsInBetween}>
       <AnimatedArrow
         className={styles.animatedArrow}
-        finalWidth={layout === 'horizontal' ? 14 : 6}
+        finalWidth={arrowWidthFor[layout]}
         animationDuration={0.65}
         animationDelay={0.1}
         reversed={shouldReverseArrow}
@@ -37,7 +39,7 @@ interface TimeRangeFormProps extends HTMLFormElementProps {
   endTime: Time;
   onStartTimeChange?: OnChangeTimeCallback;
   onEndTimeChange?: OnChangeTimeCallback;
-  layoutBreakpoint?: number;
+  layout: Layout;
 }
 
 const TimeRangeForm: FC<TimeRangeFormProps> = ({
@@ -45,16 +47,11 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
   endTime,
   onStartTimeChange,
   onEndTimeChange,
-  layoutBreakpoint = 0,
+  layout = 'horizontal',
   className,
   onSubmit = (e) => e.preventDefault(),
   ...rest
 }) => {
-  const layout = useScreenBreakpoint<FormLayout>(
-    ['vertical', 'horizontal'],
-    [layoutBreakpoint],
-  );
-
   const isStartTimeLaterThanEndTime = useMemo(() => {
     const startDate = startTime.refersToNow ? new Date() : startTime.date;
     const endDate = endTime.refersToNow ? new Date() : endTime.date;
@@ -64,11 +61,7 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
 
   return (
     <form
-      className={clsx(
-        styles.timeRangeForm,
-        layout === 'vertical' && styles.verticalLayout,
-        className,
-      )}
+      className={clsx(styles.timeRangeForm, styles[layout], className)}
       onSubmit={onSubmit}
       {...rest}
     >

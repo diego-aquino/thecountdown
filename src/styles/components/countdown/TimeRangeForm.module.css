@@ -8,16 +8,16 @@
   color: var(--primary-color-dark);
 }
 
-.timeRangeForm.verticalLayout {
+.timeRangeForm.vertical {
   flex-direction: column;
 }
 
-.timeRangeForm.verticalLayout > .startTimeInput {
-  margin-bottom: 3.5rem;
+.timeRangeForm.vertical > .startTimeInput {
+  margin-bottom: 3.2rem;
 }
 
-.timeRangeForm.verticalLayout > .endTimeInput {
-  margin-top: 3.5rem;
+.timeRangeForm.vertical > .endTimeInput {
+  margin-top: 3.2rem;
 }
 
 .iconsInBetween {
@@ -28,7 +28,7 @@
   align-items: center;
 }
 
-.timeRangeForm.verticalLayout .iconsInBetween {
+.timeRangeForm.vertical .iconsInBetween {
   transform: rotate(90deg);
 }
 
@@ -36,9 +36,13 @@
   margin: 0 2rem;
 }
 
+.timeRangeForm.horizontalNarrow .animatedArrow {
+  margin: 0 1.2rem;
+}
+
 .hourglass {
-  width: 2.7rem;
-  height: 2.7rem;
+  width: 2.6rem;
+  height: 2.6rem;
   padding: 0.4rem;
 
   position: absolute;
@@ -48,14 +52,22 @@
   transform: translate(-50%, -50%);
 
   background-color: #FFFFFF;
-  box-shadow: 0px 0px 10px 14px #FFFFFF;
+  box-shadow: 0px 0px 7px 7px #FFFFFF;
 }
 
-.timeRangeForm.verticalLayout .hourglass {
-  width: 2.3rem;
-  height: 2.3rem;
+.timeRangeForm.horizontalNarrow .hourglass {
+  width: 2.4rem;
+  height: 2.4rem;
+
+  box-shadow: 0px 0px 5px 5px #FFFFFF;
+}
+
+.timeRangeForm.vertical .hourglass {
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0;
 
   transform: translate(-50%, -50%) rotate(-90deg);
 
-  box-shadow: 0px 0px 4px 3px #FFFFFF;
+  box-shadow: 0px 0px 3px 5px #FFFFFF;
 }
