@@ -50,6 +50,7 @@ function useScreenBreakpoint<IntervalLabel>(
   }, [label, getLabelFor]);
 
   useResize(updateLabelIfNecessary);
+  useEffect(updateLabelIfNecessary, [updateLabelIfNecessary]);
 
   return label;
 }
