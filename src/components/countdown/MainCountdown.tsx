@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Time } from 'typings';
 import {
@@ -11,20 +11,31 @@ import styles from 'styles/components/countdown/MainCountdown.module.css';
 import CountdownTimer from './CountdownTimer';
 import TimeRangeForm from './TimeRangeForm';
 
-const defaultStartTime: Time = { refersToNow: true };
-const defaultEndTime: Time = getRandomTimeInFuture();
-
-const lastStartTimeEntry = getLastTimeEntryFor('startTime');
-const lastEndTimeEntry = getLastTimeEntryFor('endTime');
-
 const MainCountdown: FC = () => {
   const [startTime, setStartTime] = useState<Time | null>(null);
   const [endTime, setEndTime] = useState<Time | null>(null);
 
+  const lastStartTimeEntry = useMemo(
+    () => getLastTimeEntryFor('startTime'),
+    [],
+  );
+  const lastEndTimeEntry = useMemo(() => getLastTimeEntryFor('endTime'), []);
+
+  const getDefaultStartTime = useCallback(
+    (): Time => ({ refersToNow: true }),
+    [],
+  );
+  const getDefaultEndTime = useCallback(() => getRandomTimeInFuture(), []);
+
   useEffect(() => {
-    setStartTime(lastStartTimeEntry || defaultStartTime);
-    setEndTime(lastEndTimeEntry || defaultEndTime);
-  }, []);
+    setStartTime(lastStartTimeEntry || getDefaultStartTime());
+    setEndTime(lastEndTimeEntry || getDefaultEndTime());
+  }, [
+    lastStartTimeEntry,
+    lastEndTimeEntry,
+    getDefaultStartTime,
+    getDefaultEndTime,
+  ]);
 
   useEffect(() => {
     if (startTime) {
