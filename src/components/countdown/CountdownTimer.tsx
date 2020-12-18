@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { Time, DeltaTime, HTMLDivElementProps } from 'typings';
 import { calculateDeltaTime, isDeltaTimeFromPast } from 'utils/date';
 import { numberToFormattedString } from 'utils/format';
-import { useResize } from 'hooks';
+import { useResize, useScreenBreakpoint } from 'hooks';
 import styles from 'styles/components/countdown/CountdownTimer.module.css';
 
 interface FormattedDeltaTime {
@@ -14,6 +14,8 @@ interface FormattedDeltaTime {
   seconds: string;
   isFromPast?: boolean;
 }
+
+type CountdownTimerLayout = 'horizontal' | 'vertical';
 
 interface Props extends HTMLDivElementProps {
   startTime: Time;
@@ -74,21 +76,23 @@ const CountdownTimer: FC<Props> = ({
   }, [startTime, endTime, updateDisplayTime]);
 
   const countdownTimerRef = useRef<HTMLDivElement>(null);
-
-  const calculateMarginTopBasedOnScale = useCallback(
-    (scale: number) => 8 * scale - 3,
-    [],
+  const layout = useScreenBreakpoint<CountdownTimerLayout>(
+    ['vertical', 'horizontal'],
+    [550],
   );
 
   const adaptStylesToAvailableWidth = useCallback(() => {
+    const countdownTimerElement = countdownTimerRef.current;
+
+    if (!countdownTimerElement) {
+      return;
+    }
+
+    countdownTimerElement.style.height = '';
+
     requestAnimationFrame(() => {
-      const countdownTimerElement = countdownTimerRef.current;
-
-      if (!countdownTimerElement) {
-        return;
-      }
-
       const countdownTimerWidth = countdownTimerElement.clientWidth;
+      const countdownTimerHeight = countdownTimerElement.clientHeight;
 
       const parent = countdownTimerElement.parentElement as HTMLElement;
       const parentStyles = window.getComputedStyle(parent);
@@ -99,20 +103,19 @@ const CountdownTimer: FC<Props> = ({
       const availableWidth = parent.clientWidth - parentHorizontalPadding;
 
       const newScale = Math.min(availableWidth / countdownTimerWidth, 1);
-      const newMarginTop = `${calculateMarginTopBasedOnScale(newScale)}rem`;
+      const newHeightValue = `${countdownTimerHeight * newScale}px`;
 
       const newTransformValue = `scale(${newScale})`;
       const currentTransformValue = countdownTimerElement.style.transform;
 
       if (newTransformValue !== currentTransformValue) {
-        countdownTimerElement.style.marginTop = newMarginTop;
         countdownTimerElement.style.transform = newTransformValue;
+        countdownTimerElement.style.height = newHeightValue;
       }
     });
-  }, [calculateMarginTopBasedOnScale]);
+  }, []);
 
   useResize(adaptStylesToAvailableWidth);
-
   useEffect(adaptStylesToAvailableWidth, [
     startTime,
     endTime,
@@ -122,7 +125,11 @@ const CountdownTimer: FC<Props> = ({
   return (
     <div
       ref={countdownTimerRef}
-      className={clsx(styles.countdownTimer, className)}
+      className={clsx(
+        styles.countdownTimer,
+        layout && styles[layout],
+        className,
+      )}
       {...rest}
     >
       <div className={styles.timerContainer}>
