@@ -56,3 +56,9 @@
 .navbarItem + .navbarItem {
   margin-left: 0.9rem;
 }
+
+@media (max-width: 768px) {
+  .header {
+    padding: 1.6rem;
+  }
+}
