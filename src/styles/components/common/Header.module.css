@@ -12,13 +12,12 @@
   align-items: center;
 
   text-decoration: none;
-  color: #000000;
 
   transition: opacity var(--transition-duration);
 }
 
 .logoContainer:hover {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .logoIcon {
@@ -31,6 +30,7 @@
 
   font-size: 2.4rem;
   font-weight: 700;
+  color: var(--primary-color-dark);
 }
 
 .navbar {
@@ -43,7 +43,7 @@
   padding: 0.3rem 0.5rem;
 
   font-size: 1.8rem;
-  color: #000000;
+  color: var(--primary-color-dark);
   text-decoration: none;
 
   transition: opacity var(--transition-duration);
