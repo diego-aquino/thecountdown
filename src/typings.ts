@@ -1,4 +1,10 @@
-import React from 'react';
+import {
+  AnchorHTMLAttributes,
+  FormHTMLAttributes,
+  HTMLAttributes,
+  ImgHTMLAttributes,
+  SVGAttributes,
+} from 'react';
 
 export interface StaticTime {
   refersToNow: false;
@@ -18,29 +24,17 @@ export interface DeltaTime {
   seconds: number;
 }
 
-export type HTMLSvgElementProps = React.SVGProps<SVGSVGElement>;
+export type HTMLSvgElementProps = SVGAttributes<SVGElement>;
 
 export interface HTMLSvgElementAccessibleProps extends HTMLSvgElementProps {
   title: string;
   id: string;
 }
 
-export type HTMLDivElementProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->;
+export type HTMLDivElementProps = HTMLAttributes<HTMLDivElement>;
 
-export type HTMLAnchorElementProps = React.DetailedHTMLProps<
-  React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  HTMLAnchorElement
->;
+export type HTMLAnchorElementProps = AnchorHTMLAttributes<HTMLAnchorElement>;
 
-export type HTMLImageElementProps = React.DetailedHTMLProps<
-  React.ImgHTMLAttributes<HTMLImageElement>,
-  HTMLImageElement
->;
+export type HTMLImageElementProps = ImgHTMLAttributes<HTMLImageElement>;
 
-export type HTMLFormElementProps = React.DetailedHTMLProps<
-  React.FormHTMLAttributes<HTMLFormElement>,
-  HTMLFormElement
->;
+export type HTMLFormElementProps = FormHTMLAttributes<HTMLFormElement>;
