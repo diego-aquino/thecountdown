@@ -102,9 +102,7 @@ const CountdownTimer: FC<Props> = ({
 
       const availableWidth = parent.clientWidth - parentHorizontalPadding;
 
-      const maxScale = layout === 'vertical' ? 0.7 : 1;
-
-      const newScale = Math.min(availableWidth / countdownTimerWidth, maxScale);
+      const newScale = Math.min(availableWidth / countdownTimerWidth, 1);
       const newHeightValue = `${countdownTimerHeight * newScale}px`;
 
       const newTransformValue = `scale(${newScale})`;

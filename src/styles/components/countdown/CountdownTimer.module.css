@@ -35,15 +35,22 @@
   margin-left: 5rem;
 }
 
-.countdownTimer.vertical  .largeTimeSection + .largeTimeSection {
-  margin: 3.5rem 0 0;
+.countdownTimer.vertical .largeTimeSection + .largeTimeSection {
+  margin: 2rem 0 0;
 }
 
 .largeTimeSectionCount {
+  margin-bottom: 1rem;
+
   font-weight: 500;
   font-size: 11.8rem;
   line-height: 10rem;
-  margin-bottom: 1rem;
+}
+
+.countdownTimer.vertical .largeTimeSectionCount {
+  margin-bottom: 0;
+
+  font-size: 9rem;
 }
 
 .largeTimeSectionLabel {
@@ -55,7 +62,7 @@
 }
 
 .countdownTimer.vertical .largeTimeSectionLabel {
-  font-size: 3.2rem;
+  line-height: 2rem;
 }
 
 .smallTimeSection {
@@ -68,7 +75,7 @@
 }
 
 .countdownTimer.vertical .smallTimeSection {
-  margin: 3.5rem 0 0;
+  margin: 3.2rem 0 0;
 }
 
 .smallTimeSectionCount {
@@ -78,7 +85,7 @@
 }
 
 .countdownTimer.vertical .smallTimeSectionCount {
-  font-size: 3.8rem;
+  font-size: 3.2rem;
 }
 
 .smallTimeSectionLabel {
@@ -90,7 +97,8 @@
 }
 
 .countdownTimer.vertical .smallTimeSectionLabel {
-  font-size: 3.2rem;
+  font-size: 2.6rem;
+  line-height: 2.6rem;
 }
 
 .agoFlag {
@@ -115,5 +123,5 @@
 }
 
 .countdownTimer.vertical .agoFlag {
-  margin-top: 3.2rem;
+  margin-top: 3rem;
 }
