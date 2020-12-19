@@ -1,5 +1,7 @@
 import { Time } from 'typings';
 
+export type TimeCategory = 'startTime' | 'endTime';
+
 export type Layout = 'horizontal' | 'horizontalNarrow' | 'vertical';
 
 export type WidthBasedOnLayout = {
