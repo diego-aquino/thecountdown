@@ -1,4 +1,13 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  memo,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import clsx from 'clsx';
 
 import { Time, DeltaTime, HTMLDivElementProps } from 'typings';
@@ -17,18 +26,35 @@ interface FormattedDeltaTime {
 
 type CountdownTimerLayout = 'horizontal' | 'vertical';
 
-interface Props extends HTMLDivElementProps {
-  startTime: Time;
-  endTime: Time;
-}
+export type Ref = {
+  updateStartTime: (newStartTime: Time) => void;
+  updateEndTime: (newEndTime: Time) => void;
+};
 
-const CountdownTimer: FC<Props> = ({
-  startTime,
-  endTime,
-  className,
-  ...rest
-}) => {
+const CountdownTimer: ForwardRefRenderFunction<Ref, HTMLDivElementProps> = (
+  { className, ...rest },
+  ref,
+) => {
+  const [startTime, setStartTime] = useState<Time | null>(null);
+  const [endTime, setEndTime] = useState<Time | null>(null);
+
   const [displayTime, setDisplayTime] = useState<FormattedDeltaTime>();
+
+  const countdownTimerRef = useRef<HTMLDivElement | null>(null);
+
+  const layout = useScreenBreakpoint<CountdownTimerLayout>(
+    ['vertical', 'horizontal'],
+    [550],
+  );
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      updateStartTime: setStartTime,
+      updateEndTime: setEndTime,
+    }),
+    [],
+  );
 
   const formatDeltaTime = useCallback(
     (deltaTime: DeltaTime, isFromPast: boolean): FormattedDeltaTime => {
@@ -64,6 +90,8 @@ const CountdownTimer: FC<Props> = ({
   );
 
   useEffect(() => {
+    if (!startTime || !endTime) return;
+
     updateDisplayTime(startTime, endTime);
 
     if (startTime.refersToNow || endTime.refersToNow) {
@@ -71,15 +99,9 @@ const CountdownTimer: FC<Props> = ({
         updateDisplayTime(startTime, endTime);
       }, 1000);
 
-      return () => clearInterval(updateInterval);
+      return () => clearInterval(updateInterval); // eslint-disable-line consistent-return
     }
   }, [startTime, endTime, updateDisplayTime]);
-
-  const countdownTimerRef = useRef<HTMLDivElement>(null);
-  const layout = useScreenBreakpoint<CountdownTimerLayout>(
-    ['vertical', 'horizontal'],
-    [550],
-  );
 
   const adaptStylesToAvailableWidth = useCallback(() => {
     const countdownTimerElement = countdownTimerRef.current;
@@ -113,7 +135,7 @@ const CountdownTimer: FC<Props> = ({
         countdownTimerElement.style.transform = newTransformValue;
       }
     });
-  }, [layout]);
+  }, []);
 
   useResize(adaptStylesToAvailableWidth);
   useEffect(adaptStylesToAvailableWidth, [
@@ -167,4 +189,4 @@ const CountdownTimer: FC<Props> = ({
   );
 };
 
-export default CountdownTimer;
+export default memo(forwardRef(CountdownTimer));

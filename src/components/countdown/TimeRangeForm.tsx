@@ -1,11 +1,16 @@
-import React, { FC, memo, useMemo } from 'react';
+import React, { FC, memo, useCallback, useMemo } from 'react';
 import clsx from 'clsx';
 
 import { HTMLFormElementProps, Time } from 'typings';
 import { Hourglass } from 'assets';
 import { AnimatedArrow } from 'components/common';
 import styles from 'styles/components/countdown/TimeRangeForm.module.css';
-import { Layout, WidthBasedOnLayout, OnChangeTimeCallback } from './types';
+import {
+  Layout,
+  WidthBasedOnLayout,
+  OnChangeTimeCallback,
+  TimeCategory,
+} from './types';
 import TimeInput from './TimeInput';
 
 const arrowWidthFor: WidthBasedOnLayout = {
@@ -39,6 +44,7 @@ interface TimeRangeFormProps extends HTMLFormElementProps {
   endTime: Time;
   onStartTimeChange?: OnChangeTimeCallback;
   onEndTimeChange?: OnChangeTimeCallback;
+  onTimeInputBlur?: (timeCategory: TimeCategory, currentValue: Time) => void;
   layout: Layout;
 }
 
@@ -47,6 +53,7 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
   endTime,
   onStartTimeChange,
   onEndTimeChange,
+  onTimeInputBlur,
   layout = 'horizontal',
   className,
   onSubmit = (e) => e.preventDefault(),
@@ -59,6 +66,15 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
     return startDate > endDate;
   }, [startTime, endTime]);
 
+  const handleStartTimeInputBlur = useCallback(
+    () => onTimeInputBlur?.('startTime', startTime),
+    [startTime, onTimeInputBlur],
+  );
+  const handleEndTimeInputBlur = useCallback(
+    () => onTimeInputBlur?.('endTime', endTime),
+    [endTime, onTimeInputBlur],
+  );
+
   return (
     <form
       className={clsx(styles.timeRangeForm, styles[layout], className)}
@@ -70,6 +86,7 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
         id="startTimeInput"
         timeValue={startTime}
         onTimeChange={onStartTimeChange}
+        onBlur={handleStartTimeInputBlur}
       />
 
       <IconsInBetween
@@ -82,6 +99,7 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
         id="endTimeInput"
         timeValue={endTime}
         onTimeChange={onEndTimeChange}
+        onBlur={handleEndTimeInputBlur}
       />
     </form>
   );

@@ -39,7 +39,8 @@
     }
   },
   "globals": {
-    "JSX": "readonly"
+    "JSX": "readonly",
+    "NodeJS": "readonly"
   },
   "rules": {
     "prettier/prettier": "error",
@@ -94,6 +95,7 @@
       "ignoreRestSiblings": false
     }],
     "no-use-before-define": "off",
+    "no-unused-expressions": "off",
 
     // Next.js-specific rules
     "jsx-a11y/anchor-is-valid": "off"
