@@ -39,7 +39,8 @@
     }
   },
   "globals": {
-    "JSX": "readonly"
+    "JSX": "readonly",
+    "NodeJS": "readonly"
   },
   "rules": {
     "prettier/prettier": "error",
