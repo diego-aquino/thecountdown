@@ -7,7 +7,9 @@ import {
   saveTimeEntryLocally,
 } from 'utils/date';
 import { CircularLoading } from 'components/common';
+import { useScreenBreakpoint } from 'hooks';
 import styles from 'styles/components/countdown/MainCountdown.module.css';
+import { Layout } from './types';
 import CountdownTimer from './CountdownTimer';
 import TimeRangeForm from './TimeRangeForm';
 
@@ -49,16 +51,21 @@ const MainCountdown: FC = () => {
     }
   }, [endTime]);
 
+  const layout = useScreenBreakpoint<Layout>(
+    ['vertical', 'horizontalNarrow', 'horizontal'],
+    [805, 860],
+  );
+
   return (
     <div className={styles.mainCountdown}>
-      {startTime && endTime ? (
+      {startTime && endTime && layout ? (
         <>
           <TimeRangeForm
+            layout={layout}
             startTime={startTime}
             endTime={endTime}
             onStartTimeChange={setStartTime}
             onEndTimeChange={setEndTime}
-            layoutBreakpoint={880}
           />
           <CountdownTimer startTime={startTime} endTime={endTime} />
         </>

@@ -5,10 +5,8 @@ import useResize from './useResize';
 function useScreenBreakpoint<IntervalLabel>(
   intervalLabels: IntervalLabel[],
   breakpoints: number[],
-): IntervalLabel {
-  const [label, setLabel] = useState<IntervalLabel>(
-    intervalLabels[intervalLabels.length - 1],
-  );
+): IntervalLabel | null {
+  const [label, setLabel] = useState<IntervalLabel | null>(null);
 
   const searchRightmostValueLowerThan = useCallback(
     (upperLimit: number, searchingArray: number[]) => {
@@ -52,6 +50,7 @@ function useScreenBreakpoint<IntervalLabel>(
   }, [label, getLabelFor]);
 
   useResize(updateLabelIfNecessary);
+  useEffect(updateLabelIfNecessary, [updateLabelIfNecessary]);
 
   return label;
 }
