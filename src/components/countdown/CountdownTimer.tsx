@@ -11,7 +11,11 @@ import React, {
 import clsx from 'clsx';
 
 import { Time, DeltaTime, HTMLDivElementProps, NumberSign } from 'typings';
-import { calculateDeltaTime, isDeltaTimeFromPast } from 'utils/date';
+import {
+  calculateDeltaTime,
+  isContinuousDeltaTime,
+  isDeltaTimeAgo,
+} from 'utils/date';
 import { numberToFormattedString } from 'utils/format';
 import { useResize, useScreenBreakpoint } from 'hooks';
 import { CircularLoading } from 'components/common';
@@ -22,7 +26,8 @@ interface FormattedDeltaTime {
   hours: string;
   minutes: string;
   seconds: string;
-  isFromPast: boolean;
+  isNegative: boolean;
+  isAgo: boolean;
 }
 
 type CountdownTimerLayout = 'horizontal' | 'vertical';
@@ -34,11 +39,11 @@ export type Ref = {
 };
 
 interface Props extends HTMLDivElementProps {
-  onTimerEnd?: (newTimeRangeSign: NumberSign) => void;
+  onTimeRangeSignChange?: (newTimeRangeSign: NumberSign) => void;
 }
 
 const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
-  { onTimerEnd, className, ...rest },
+  { onTimeRangeSignChange, className, ...rest },
   ref,
 ) => {
   const [startTime, setStartTime] = useState<Time | null>(null);
@@ -67,15 +72,16 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
   );
 
   const formatDeltaTime = useCallback(
-    (deltaTime: DeltaTime, isFromPast: boolean): FormattedDeltaTime => {
-      const { days, hours, minutes, seconds } = deltaTime;
+    (deltaTime: DeltaTime, isAgo: boolean): FormattedDeltaTime => {
+      const { days, hours, minutes, seconds, isNegative } = deltaTime;
 
       return {
         days: days.toString(),
         hours: numberToFormattedString(hours, 2),
         minutes: numberToFormattedString(minutes, 2),
         seconds: numberToFormattedString(seconds, 2),
-        isFromPast,
+        isNegative,
+        isAgo,
       };
     },
     [],
@@ -83,16 +89,10 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
 
   const updateDisplayTime = useCallback(
     (newStartTime: Time, newEndTime: Time) => {
-      const startTimeDate = newStartTime.refersToNow
-        ? new Date()
-        : newStartTime.date;
-      const endTimeDate = newEndTime.refersToNow ? new Date() : newEndTime.date;
+      const deltaTime = calculateDeltaTime(newStartTime, newEndTime);
+      const isAgo = isDeltaTimeAgo(newStartTime, newEndTime);
 
-      const deltaTime = calculateDeltaTime(startTimeDate, endTimeDate);
-      const formattedDeltaTime = formatDeltaTime(
-        deltaTime,
-        isDeltaTimeFromPast(newStartTime, newEndTime),
-      );
+      const formattedDeltaTime = formatDeltaTime(deltaTime, isAgo);
 
       setDisplayTime(formattedDeltaTime);
     },
@@ -104,7 +104,7 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
 
     updateDisplayTime(startTime, endTime);
 
-    if (startTime.refersToNow || endTime.refersToNow) {
+    if (isContinuousDeltaTime(startTime, endTime)) {
       const updateInterval = setInterval(() => {
         updateDisplayTime(startTime, endTime);
       }, 1000);
@@ -117,15 +117,16 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
     if (!displayTime) return;
 
     const previousTimeRangeSign = timeRangeSign.current;
-    const currentTimeRangeSign = displayTime.isFromPast ? -1 : 1;
+    const currentTimeRangeSign = displayTime.isNegative ? -1 : 1;
 
-    const hasTimerEnded = previousTimeRangeSign !== currentTimeRangeSign;
+    const hasTimeRangeSignChanged =
+      previousTimeRangeSign !== currentTimeRangeSign;
 
-    if (hasTimerEnded) {
-      onTimerEnd?.(currentTimeRangeSign);
+    if (hasTimeRangeSignChanged) {
+      onTimeRangeSignChange?.(currentTimeRangeSign);
       timeRangeSign.current = currentTimeRangeSign;
     }
-  }, [onTimerEnd, displayTime]);
+  }, [onTimeRangeSignChange, displayTime]);
 
   const adaptStylesToAvailableWidth = useCallback(() => {
     const countdownTimerElement = countdownTimerRef.current;
@@ -210,7 +211,7 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
       <div
         className={clsx(
           styles.agoFlag,
-          !displayTime?.isFromPast && styles.hidden,
+          !displayTime?.isAgo && styles.hidden,
           isLoading && styles.loading,
         )}
       >

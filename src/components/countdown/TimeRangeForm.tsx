@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import { HTMLFormElementProps, NumberSign, Time } from 'typings';
 import { Hourglass } from 'assets';
 import { AnimatedArrow } from 'components/common';
+import { isContinuousDeltaTime } from 'utils/date';
 import styles from 'styles/components/countdown/TimeRangeForm.module.css';
 import {
   Layout,
@@ -26,32 +27,35 @@ const arrowWidthFor: WidthBasedOnLayout = {
   vertical: 5.5,
 };
 
-interface IconsInBetweenProps {
-  layout: Layout;
-  shouldReverseArrow: boolean;
-}
-
 const animatedArrow = {
   animationDuration: 0.65,
   animationDelay: 0.1,
 };
 
+interface IconsInBetweenProps {
+  layout: Layout;
+  shouldReverseArrow: boolean;
+  shouldAnimateHourglass: boolean;
+}
+
 const IconsInBetween: FC<IconsInBetweenProps> = memo(
-  ({ layout, shouldReverseArrow }) => {
-    const [shouldAnimateHourglass, setShouldAnimateHourglass] = useState(false);
+  ({ layout, shouldReverseArrow, shouldAnimateHourglass }) => {
+    const [isHourglassAnimated, setIsHourglassAnimated] = useState(false);
 
     useEffect(() => {
-      setShouldAnimateHourglass(false);
+      setIsHourglassAnimated(false);
+
+      if (!shouldAnimateHourglass) return;
 
       const delayToEnableHourglassAnimation =
         animatedArrow.animationDuration + animatedArrow.animationDelay;
 
       const timer = setTimeout(() => {
-        setShouldAnimateHourglass(true);
+        setIsHourglassAnimated(true);
       }, delayToEnableHourglassAnimation);
 
-      return () => clearTimeout(timer);
-    }, [shouldReverseArrow]);
+      return () => clearTimeout(timer); // eslint-disable-line consistent-return
+    }, [shouldReverseArrow, shouldAnimateHourglass]);
 
     return (
       <div className={styles.iconsInBetween}>
@@ -66,7 +70,7 @@ const IconsInBetween: FC<IconsInBetweenProps> = memo(
           <Hourglass
             className={clsx(
               styles.hourglass,
-              shouldAnimateHourglass && styles.animated,
+              isHourglassAnimated && styles.animated,
             )}
           />
         </div>
@@ -108,6 +112,11 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
     return startDate > endDate;
   }, [startTime, endTime, timeRangeSign]);
 
+  const shouldAnimateHourglass = useMemo(
+    () => isContinuousDeltaTime(startTime, endTime),
+    [startTime, endTime],
+  );
+
   const handleStartTimeInputBlur = useCallback(
     () => onTimeInputBlur?.('startTime', startTime),
     [startTime, onTimeInputBlur],
@@ -131,7 +140,11 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
         onBlur={handleStartTimeInputBlur}
       />
 
-      <IconsInBetween layout={layout} shouldReverseArrow={shouldReverseArrow} />
+      <IconsInBetween
+        layout={layout}
+        shouldReverseArrow={shouldReverseArrow}
+        shouldAnimateHourglass={shouldAnimateHourglass}
+      />
 
       <TimeInput
         className={styles.endTimeInput}
