@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import clsx from 'clsx';
 
-import { Time, DeltaTime, HTMLDivElementProps } from 'typings';
+import { Time, DeltaTime, HTMLDivElementProps, NumberSign } from 'typings';
 import { calculateDeltaTime, isDeltaTimeFromPast } from 'utils/date';
 import { numberToFormattedString } from 'utils/format';
 import { useResize, useScreenBreakpoint } from 'hooks';
@@ -21,7 +21,7 @@ interface FormattedDeltaTime {
   hours: string;
   minutes: string;
   seconds: string;
-  isFromPast?: boolean;
+  isFromPast: boolean;
 }
 
 type CountdownTimerLayout = 'horizontal' | 'vertical';
@@ -31,14 +31,19 @@ export type Ref = {
   updateEndTime: (newEndTime: Time) => void;
 };
 
-const CountdownTimer: ForwardRefRenderFunction<Ref, HTMLDivElementProps> = (
-  { className, ...rest },
+interface Props extends HTMLDivElementProps {
+  onTimerEnd?: (newTimeRangeSign: NumberSign) => void;
+}
+
+const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
+  { onTimerEnd, className, ...rest },
   ref,
 ) => {
   const [startTime, setStartTime] = useState<Time | null>(null);
   const [endTime, setEndTime] = useState<Time | null>(null);
 
   const [displayTime, setDisplayTime] = useState<FormattedDeltaTime>();
+  const timeRangeSign = useRef<NumberSign>();
 
   const countdownTimerRef = useRef<HTMLDivElement | null>(null);
 
@@ -102,6 +107,20 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, HTMLDivElementProps> = (
       return () => clearInterval(updateInterval); // eslint-disable-line consistent-return
     }
   }, [startTime, endTime, updateDisplayTime]);
+
+  useEffect(() => {
+    if (!displayTime) return;
+
+    const previousTimeRangeSign = timeRangeSign.current;
+    const currentTimeRangeSign = displayTime.isFromPast ? -1 : 1;
+
+    const hasTimerEnded = previousTimeRangeSign !== currentTimeRangeSign;
+
+    if (hasTimerEnded) {
+      onTimerEnd?.(currentTimeRangeSign);
+      timeRangeSign.current = currentTimeRangeSign;
+    }
+  }, [onTimerEnd, displayTime]);
 
   const adaptStylesToAvailableWidth = useCallback(() => {
     const countdownTimerElement = countdownTimerRef.current;

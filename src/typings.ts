@@ -24,6 +24,8 @@ export interface DeltaTime {
   seconds: number;
 }
 
+export type NumberSign = -1 | 1;
+
 export type HTMLSvgElementProps = SVGAttributes<SVGElement>;
 
 export interface HTMLSvgElementAccessibleProps extends HTMLSvgElementProps {
