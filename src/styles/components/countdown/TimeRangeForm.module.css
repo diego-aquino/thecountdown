@@ -40,10 +40,9 @@
   margin: 0 1.2rem;
 }
 
-.hourglass {
+.hourglassContainer {
   width: 2.6rem;
   height: 2.6rem;
-  padding: 0.4rem;
 
   position: absolute;
   z-index: 1;
@@ -51,23 +50,49 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
+  display: flex;
+
   background-color: #FFFFFF;
   box-shadow: 0px 0px 7px 7px #FFFFFF;
 }
 
-.timeRangeForm.horizontalNarrow .hourglass {
+.timeRangeForm.horizontalNarrow .hourglassContainer {
   width: 2.4rem;
   height: 2.4rem;
 
   box-shadow: 0px 0px 5px 5px #FFFFFF;
 }
 
-.timeRangeForm.vertical .hourglass {
+.timeRangeForm.vertical .hourglassContainer {
   width: 1.4rem;
   height: 1.4rem;
-  padding: 0;
 
   transform: translate(-50%, -50%) rotate(-90deg);
 
   box-shadow: 0px 0px 3px 5px #FFFFFF;
+}
+
+.hourglass {
+  width: 100%;
+  height: 100%;
+  padding: 0.4rem;
+}
+
+.hourglass.animated {
+  animation: alternateRotation 3s infinite;
+  animation-delay: 1s;
+}
+
+.timeRangeForm.vertical .hourglass {
+  padding: 0;
+}
+
+@keyframes alternateRotation {
+  12.5% {
+    transform: rotate(0deg);
+  } 37.5%, 62.5% {
+    transform: rotate(180deg);
+  } 87.5% {
+    transform: rotate(0deg);
+  }
 }

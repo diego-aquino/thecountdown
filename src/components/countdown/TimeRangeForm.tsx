@@ -1,4 +1,11 @@
-import React, { FC, memo, useCallback, useMemo } from 'react';
+import React, {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import clsx from 'clsx';
 
 import { HTMLFormElementProps, NumberSign, Time } from 'typings';
@@ -24,19 +31,48 @@ interface IconsInBetweenProps {
   shouldReverseArrow: boolean;
 }
 
+const animatedArrow = {
+  animationDuration: 0.65,
+  animationDelay: 0.1,
+};
+
 const IconsInBetween: FC<IconsInBetweenProps> = memo(
-  ({ layout, shouldReverseArrow }) => (
-    <div className={styles.iconsInBetween}>
-      <AnimatedArrow
-        className={styles.animatedArrow}
-        finalWidth={arrowWidthFor[layout]}
-        animationDuration={0.65}
-        animationDelay={0.1}
-        reversed={shouldReverseArrow}
-      />
-      <Hourglass className={styles.hourglass} />
-    </div>
-  ),
+  ({ layout, shouldReverseArrow }) => {
+    const [shouldAnimateHourglass, setShouldAnimateHourglass] = useState(false);
+
+    useEffect(() => {
+      setShouldAnimateHourglass(false);
+
+      const delayToEnableHourglassAnimation =
+        animatedArrow.animationDuration + animatedArrow.animationDelay;
+
+      const timer = setTimeout(() => {
+        setShouldAnimateHourglass(true);
+      }, delayToEnableHourglassAnimation);
+
+      return () => clearTimeout(timer);
+    }, [shouldReverseArrow]);
+
+    return (
+      <div className={styles.iconsInBetween}>
+        <AnimatedArrow
+          className={styles.animatedArrow}
+          finalWidth={arrowWidthFor[layout]}
+          animationDuration={animatedArrow.animationDuration}
+          animationDelay={animatedArrow.animationDelay}
+          reversed={shouldReverseArrow}
+        />
+        <div className={styles.hourglassContainer}>
+          <Hourglass
+            className={clsx(
+              styles.hourglass,
+              shouldAnimateHourglass && styles.animated,
+            )}
+          />
+        </div>
+      </div>
+    );
+  },
 );
 
 interface TimeRangeFormProps extends HTMLFormElementProps {
