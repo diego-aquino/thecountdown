@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 
-import { Time } from 'typings';
+import { NumberSign, Time } from 'typings';
 import {
   getRandomTimeInFuture,
   getLastTimeEntryFor,
@@ -45,6 +45,8 @@ const MainCountdown: FC = () => {
     ['vertical', 'horizontalNarrow', 'horizontal'],
     [805, 860],
   );
+
+  const [timeRangeSign, setTimeRangeSign] = useState<NumberSign>();
 
   const lastStartTime = useMemo(() => getLastTimeEntryFor('startTime'), []);
   const lastEndTime = useMemo(() => getLastTimeEntryFor('endTime'), []);
@@ -135,6 +137,13 @@ const MainCountdown: FC = () => {
     [updateCountdownTimer],
   );
 
+  const handleCountdownTimerEnd = useCallback(
+    (newTimeRangeSign: NumberSign) => {
+      setTimeRangeSign(newTimeRangeSign);
+    },
+    [],
+  );
+
   return (
     <div className={styles.mainCountdown}>
       {startTime && endTime && layout ? (
@@ -143,11 +152,15 @@ const MainCountdown: FC = () => {
             layout={layout}
             startTime={startTime}
             endTime={endTime}
+            timeRangeSign={timeRangeSign}
             onStartTimeChange={setStartTime}
             onEndTimeChange={setEndTime}
             onTimeInputBlur={handleTimeInputBlur}
           />
-          <CountdownTimer ref={countdownTimerRef} />
+          <CountdownTimer
+            ref={countdownTimerRef}
+            onTimerEnd={handleCountdownTimerEnd}
+          />
         </>
       ) : (
         <CircularLoading />

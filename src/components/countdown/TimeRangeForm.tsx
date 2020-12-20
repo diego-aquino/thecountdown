@@ -1,7 +1,7 @@
 import React, { FC, memo, useCallback, useMemo } from 'react';
 import clsx from 'clsx';
 
-import { HTMLFormElementProps, Time } from 'typings';
+import { HTMLFormElementProps, NumberSign, Time } from 'typings';
 import { Hourglass } from 'assets';
 import { AnimatedArrow } from 'components/common';
 import styles from 'styles/components/countdown/TimeRangeForm.module.css';
@@ -42,6 +42,7 @@ const IconsInBetween: FC<IconsInBetweenProps> = memo(
 interface TimeRangeFormProps extends HTMLFormElementProps {
   startTime: Time;
   endTime: Time;
+  timeRangeSign?: NumberSign;
   onStartTimeChange?: OnChangeTimeCallback;
   onEndTimeChange?: OnChangeTimeCallback;
   onTimeInputBlur?: (timeCategory: TimeCategory, currentValue: Time) => void;
@@ -51,6 +52,7 @@ interface TimeRangeFormProps extends HTMLFormElementProps {
 const TimeRangeForm: FC<TimeRangeFormProps> = ({
   startTime,
   endTime,
+  timeRangeSign,
   onStartTimeChange,
   onEndTimeChange,
   onTimeInputBlur,
@@ -59,12 +61,16 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
   onSubmit = (e) => e.preventDefault(),
   ...rest
 }) => {
-  const isStartTimeLaterThanEndTime = useMemo(() => {
+  const shouldReverseArrow = useMemo(() => {
+    if (timeRangeSign !== undefined) {
+      return timeRangeSign === -1;
+    }
+
     const startDate = startTime.refersToNow ? new Date() : startTime.date;
     const endDate = endTime.refersToNow ? new Date() : endTime.date;
 
     return startDate > endDate;
-  }, [startTime, endTime]);
+  }, [startTime, endTime, timeRangeSign]);
 
   const handleStartTimeInputBlur = useCallback(
     () => onTimeInputBlur?.('startTime', startTime),
@@ -89,10 +95,7 @@ const TimeRangeForm: FC<TimeRangeFormProps> = ({
         onBlur={handleStartTimeInputBlur}
       />
 
-      <IconsInBetween
-        layout={layout}
-        shouldReverseArrow={isStartTimeLaterThanEndTime}
-      />
+      <IconsInBetween layout={layout} shouldReverseArrow={shouldReverseArrow} />
 
       <TimeInput
         className={styles.endTimeInput}
