@@ -11,7 +11,11 @@ import React, {
 import clsx from 'clsx';
 
 import { Time, DeltaTime, HTMLDivElementProps, NumberSign } from 'typings';
-import { calculateDeltaTime, isDeltaTimeAgo } from 'utils/date';
+import {
+  calculateDeltaTime,
+  isContinuousDeltaTime,
+  isDeltaTimeAgo,
+} from 'utils/date';
 import { numberToFormattedString } from 'utils/format';
 import { useResize, useScreenBreakpoint } from 'hooks';
 import { CircularLoading } from 'components/common';
@@ -100,7 +104,7 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
 
     updateDisplayTime(startTime, endTime);
 
-    if (startTime.refersToNow || endTime.refersToNow) {
+    if (isContinuousDeltaTime(startTime, endTime)) {
       const updateInterval = setInterval(() => {
         updateDisplayTime(startTime, endTime);
       }, 1000);

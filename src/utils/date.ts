@@ -1,6 +1,14 @@
 import { Time, DeltaTime } from 'typings';
 import { retrieveFromLocalStorage, saveToLocalStorage } from './local';
 
+export function isContinuousDeltaTime(startTime: Time, endTime: Time): boolean {
+  const isContinuous =
+    (startTime.refersToNow && !endTime.refersToNow) ||
+    (!startTime.refersToNow && endTime.refersToNow);
+
+  return isContinuous;
+}
+
 export function calculateDeltaTime(startTime: Time, endTime: Time): DeltaTime {
   const startTimeDate = startTime.refersToNow ? new Date() : startTime.date;
   const endTimeDate = endTime.refersToNow ? new Date() : endTime.date;
