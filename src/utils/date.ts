@@ -32,7 +32,7 @@ export function calculateDeltaTime(startTime: Time, endTime: Time): DeltaTime {
   return deltaTime;
 }
 
-export function isDeltaTimeFromPast(startTime: Time, endTime: Time): boolean {
+export function isDeltaTimeAgo(startTime: Time, endTime: Time): boolean {
   const startTimeWithDate = {
     refersToNow: startTime.refersToNow,
     date: startTime.refersToNow ? new Date() : startTime.date,
