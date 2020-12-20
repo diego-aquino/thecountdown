@@ -24,6 +24,8 @@ const inactivityDelayTime = 500;
 
 type UpdateOptions = {
   [key in TimeCategory]?: Time;
+} & {
+  isLoading?: boolean;
 };
 
 type UpdateCountdownTimerHandle = (options: UpdateOptions) => void;
@@ -63,12 +65,18 @@ const MainCountdown: FC = () => {
   }, [lastStartTime, lastEndTime, getDefaultStartTime, getDefaultEndTime]);
 
   const updateCountdownTimer = useCallback<UpdateCountdownTimerHandle>(
-    ({ startTime: newStartTime, endTime: newEndTime }) => {
+    ({ startTime: newStartTime, endTime: newEndTime, isLoading }) => {
+      const { updateStartTime, updateEndTime, setIsLoading } =
+        countdownTimerRef.current || {};
+
       if (newStartTime) {
-        countdownTimerRef.current?.updateStartTime(newStartTime);
+        updateStartTime?.(newStartTime);
       }
       if (newEndTime) {
-        countdownTimerRef.current?.updateEndTime(newEndTime);
+        updateEndTime?.(newEndTime);
+      }
+      if (isLoading !== undefined) {
+        setIsLoading?.(isLoading);
       }
     },
     [],
@@ -100,16 +108,20 @@ const MainCountdown: FC = () => {
 
       timePendingDisplay.value = newValue;
 
-      if (timePendingDisplay.timer) {
-        clearTimeout(timePendingDisplay.timer);
-      } else {
-        // update CountdownTimer right away if on first render
+      const isFirstCountdownTimerRender = !timePendingDisplay.timer;
+
+      if (isFirstCountdownTimerRender) {
         updateCountdownTimer({ [timeCategory]: newValue });
+      } else {
+        if (timePendingDisplay.timer) {
+          clearTimeout(timePendingDisplay.timer);
+        }
+        updateCountdownTimer({ isLoading: true });
       }
 
       timePendingDisplay.timer = setTimeout(() => {
         if (isPendingTimeStillTheSame(timeCategory, newValue)) {
-          updateCountdownTimer({ [timeCategory]: newValue });
+          updateCountdownTimer({ [timeCategory]: newValue, isLoading: false });
         }
       }, inactivityDelayTime);
     },
@@ -132,7 +144,7 @@ const MainCountdown: FC = () => {
         clearTimeout(onGoingUpdateTimer);
       }
 
-      updateCountdownTimer({ [timeCategory]: currentValue });
+      updateCountdownTimer({ [timeCategory]: currentValue, isLoading: false });
     },
     [updateCountdownTimer],
   );
