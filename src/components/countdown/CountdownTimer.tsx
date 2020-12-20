@@ -39,11 +39,11 @@ export type Ref = {
 };
 
 interface Props extends HTMLDivElementProps {
-  onTimerEnd?: (newTimeRangeSign: NumberSign) => void;
+  onTimeRangeSignChange?: (newTimeRangeSign: NumberSign) => void;
 }
 
 const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
-  { onTimerEnd, className, ...rest },
+  { onTimeRangeSignChange, className, ...rest },
   ref,
 ) => {
   const [startTime, setStartTime] = useState<Time | null>(null);
@@ -119,13 +119,14 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
     const previousTimeRangeSign = timeRangeSign.current;
     const currentTimeRangeSign = displayTime.isNegative ? -1 : 1;
 
-    const hasTimerEnded = previousTimeRangeSign !== currentTimeRangeSign;
+    const hasTimeRangeSignChanged =
+      previousTimeRangeSign !== currentTimeRangeSign;
 
-    if (hasTimerEnded) {
-      onTimerEnd?.(currentTimeRangeSign);
+    if (hasTimeRangeSignChanged) {
+      onTimeRangeSignChange?.(currentTimeRangeSign);
       timeRangeSign.current = currentTimeRangeSign;
     }
-  }, [onTimerEnd, displayTime]);
+  }, [onTimeRangeSignChange, displayTime]);
 
   const adaptStylesToAvailableWidth = useCallback(() => {
     const countdownTimerElement = countdownTimerRef.current;

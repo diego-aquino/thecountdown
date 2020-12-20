@@ -149,7 +149,7 @@ const MainCountdown: FC = () => {
     [updateCountdownTimer],
   );
 
-  const handleCountdownTimerEnd = useCallback(
+  const handleTimeRangeSignChange = useCallback(
     (newTimeRangeSign: NumberSign) => {
       setTimeRangeSign(newTimeRangeSign);
     },
@@ -171,7 +171,7 @@ const MainCountdown: FC = () => {
           />
           <CountdownTimer
             ref={countdownTimerRef}
-            onTimerEnd={handleCountdownTimerEnd}
+            onTimeRangeSignChange={handleTimeRangeSignChange}
           />
         </>
       ) : (
