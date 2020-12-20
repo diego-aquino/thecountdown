@@ -1,10 +1,14 @@
 import { Time, DeltaTime } from 'typings';
 import { retrieveFromLocalStorage, saveToLocalStorage } from './local';
 
-export function calculateDeltaTime(startTime: Date, endTime: Date): DeltaTime {
+export function calculateDeltaTime(startTime: Time, endTime: Time): DeltaTime {
+  const startTimeDate = startTime.refersToNow ? new Date() : startTime.date;
+  const endTimeDate = endTime.refersToNow ? new Date() : endTime.date;
+
   const deltaTimeInMilliseconds = Math.abs(
-    endTime.getTime() - startTime.getTime(),
+    endTimeDate.getTime() - startTimeDate.getTime(),
   );
+
   const deltaTimeInSeconds = Math.floor(deltaTimeInMilliseconds / 1000);
 
   const seconds = deltaTimeInSeconds % 60;
@@ -15,7 +19,15 @@ export function calculateDeltaTime(startTime: Date, endTime: Date): DeltaTime {
   const remainingDays = Math.floor(remainingHours / 24);
   const days = remainingDays;
 
-  const deltaTime: DeltaTime = { days, hours, minutes, seconds };
+  const isNegative = startTimeDate > endTimeDate;
+
+  const deltaTime: DeltaTime = {
+    days,
+    hours,
+    minutes,
+    seconds,
+    isNegative,
+  };
 
   return deltaTime;
 }

@@ -22,7 +22,8 @@ interface FormattedDeltaTime {
   hours: string;
   minutes: string;
   seconds: string;
-  isFromPast: boolean;
+  isNegative: boolean;
+  isAgo: boolean;
 }
 
 type CountdownTimerLayout = 'horizontal' | 'vertical';
@@ -67,15 +68,16 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
   );
 
   const formatDeltaTime = useCallback(
-    (deltaTime: DeltaTime, isFromPast: boolean): FormattedDeltaTime => {
-      const { days, hours, minutes, seconds } = deltaTime;
+    (deltaTime: DeltaTime, isAgo: boolean): FormattedDeltaTime => {
+      const { days, hours, minutes, seconds, isNegative } = deltaTime;
 
       return {
         days: days.toString(),
         hours: numberToFormattedString(hours, 2),
         minutes: numberToFormattedString(minutes, 2),
         seconds: numberToFormattedString(seconds, 2),
-        isFromPast,
+        isNegative,
+        isAgo,
       };
     },
     [],
@@ -83,16 +85,10 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
 
   const updateDisplayTime = useCallback(
     (newStartTime: Time, newEndTime: Time) => {
-      const startTimeDate = newStartTime.refersToNow
-        ? new Date()
-        : newStartTime.date;
-      const endTimeDate = newEndTime.refersToNow ? new Date() : newEndTime.date;
+      const deltaTime = calculateDeltaTime(newStartTime, newEndTime);
+      const isAgo = isDeltaTimeFromPast(newStartTime, newEndTime);
 
-      const deltaTime = calculateDeltaTime(startTimeDate, endTimeDate);
-      const formattedDeltaTime = formatDeltaTime(
-        deltaTime,
-        isDeltaTimeFromPast(newStartTime, newEndTime),
-      );
+      const formattedDeltaTime = formatDeltaTime(deltaTime, isAgo);
 
       setDisplayTime(formattedDeltaTime);
     },
@@ -117,7 +113,7 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
     if (!displayTime) return;
 
     const previousTimeRangeSign = timeRangeSign.current;
-    const currentTimeRangeSign = displayTime.isFromPast ? -1 : 1;
+    const currentTimeRangeSign = displayTime.isNegative ? -1 : 1;
 
     const hasTimerEnded = previousTimeRangeSign !== currentTimeRangeSign;
 
@@ -210,7 +206,7 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
       <div
         className={clsx(
           styles.agoFlag,
-          !displayTime?.isFromPast && styles.hidden,
+          !displayTime?.isAgo && styles.hidden,
           isLoading && styles.loading,
         )}
       >

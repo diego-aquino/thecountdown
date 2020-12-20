@@ -22,6 +22,7 @@ export interface DeltaTime {
   hours: number;
   minutes: number;
   seconds: number;
+  isNegative: boolean;
 }
 
 export type NumberSign = -1 | 1;
