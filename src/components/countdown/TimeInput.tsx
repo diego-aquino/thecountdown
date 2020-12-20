@@ -38,6 +38,14 @@ const TimeInput: FC<Props> = ({
     [onTimeChange],
   );
 
+  const resetDateToNowAsStaticDate = useCallback(() => {
+    const nowAsStaticDate = new Date();
+    nowAsStaticDate.setSeconds(0);
+    nowAsStaticDate.setMilliseconds(0);
+
+    handleDateChange(nowAsStaticDate);
+  }, [handleDateChange]);
+
   return (
     <div className={clsx(styles.timeInput, className)} {...rest}>
       <button
@@ -46,7 +54,7 @@ const TimeInput: FC<Props> = ({
           !timeValue.refersToNow && styles.hidden,
         )}
         type="button"
-        onClick={() => handleDateChange(new Date())}
+        onClick={resetDateToNowAsStaticDate}
       >
         <h4 className={styles.nowLabel}>
           <Calendar
