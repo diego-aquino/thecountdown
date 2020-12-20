@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
 
+
   color: #0948AC;
 }
 
@@ -17,6 +18,26 @@
   padding: 0 2rem;
   display: flex;
   align-items: flex-end;
+
+  position: relative;
+
+  transition: opacity var(--transition-duration);
+}
+
+.timerContainer.loading {
+  opacity: 0.7;
+}
+
+.loadingContainer {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loadingIcon {
+  opacity: 1;
 }
 
 .countdownTimer.vertical .timerContainer {
@@ -120,6 +141,10 @@
 
 .agoFlag.hidden {
   visibility: hidden;
+}
+
+.agoFlag.loading {
+  opacity: 0.7;
 }
 
 .countdownTimer.vertical .agoFlag {

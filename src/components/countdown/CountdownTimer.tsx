@@ -14,6 +14,7 @@ import { Time, DeltaTime, HTMLDivElementProps, NumberSign } from 'typings';
 import { calculateDeltaTime, isDeltaTimeFromPast } from 'utils/date';
 import { numberToFormattedString } from 'utils/format';
 import { useResize, useScreenBreakpoint } from 'hooks';
+import { CircularLoading } from 'components/common';
 import styles from 'styles/components/countdown/CountdownTimer.module.css';
 
 interface FormattedDeltaTime {
@@ -29,6 +30,7 @@ type CountdownTimerLayout = 'horizontal' | 'vertical';
 export type Ref = {
   updateStartTime: (newStartTime: Time) => void;
   updateEndTime: (newEndTime: Time) => void;
+  setIsLoading: (newLoadingStatus: boolean) => void;
 };
 
 interface Props extends HTMLDivElementProps {
@@ -41,6 +43,8 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
 ) => {
   const [startTime, setStartTime] = useState<Time | null>(null);
   const [endTime, setEndTime] = useState<Time | null>(null);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [displayTime, setDisplayTime] = useState<FormattedDeltaTime>();
   const timeRangeSign = useRef<NumberSign>();
@@ -57,6 +61,7 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
     () => ({
       updateStartTime: setStartTime,
       updateEndTime: setEndTime,
+      setIsLoading,
     }),
     [],
   );
@@ -173,7 +178,13 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
       )}
       {...rest}
     >
-      <div className={styles.timerContainer}>
+      <div className={clsx(styles.timerContainer, isLoading && styles.loading)}>
+        {isLoading && (
+          <div className={styles.loadingContainer}>
+            <CircularLoading className={styles.loadingIcon} />
+          </div>
+        )}
+
         <div className={styles.largeTimeSection}>
           <h1 className={styles.largeTimeSectionCount}>{displayTime?.days}</h1>
           <h4 className={styles.largeTimeSectionLabel}>days</h4>
@@ -200,6 +211,7 @@ const CountdownTimer: ForwardRefRenderFunction<Ref, Props> = (
         className={clsx(
           styles.agoFlag,
           !displayTime?.isFromPast && styles.hidden,
+          isLoading && styles.loading,
         )}
       >
         ago
