@@ -43,17 +43,17 @@
 
 ## :mag: Motivation
 
-The idea to build this project started from a personal need to know how much time was left for an activity, and getting kind of disappointed by the existing solutions I found on the internet. This personal need inspired me to create this project. :hourglass:
+The idea to build this project started from a personal need to know how much time was left for an event, and getting kind of disappointed by the existing solutions I found on the internet. This personal need inspired me to create this project. :hourglass:
 
 Also, developing [TheCountdown](https://thecountdown.vercel.app/) was a great way to practice my development skills by creating and publishing an application from scratch, which would solve a real problem in the world!
 
 ## :rocket: Features
 
-- Flexible, interactive countdown timers, from any date to any date
-- Good user experience (UX) and visual feedback
-- Simple, user-friendly, and intuitive interface
-- Responsive layouts, both mobile-friendly and desktop-friendly
-- Fast, lightweight, and easily accessible application on the internet
+- **Flexible, interactive countdown timers**, from any date to any date
+- Good **user experience** (**UX**) and **visual feedback**
+- **Simple, user-friendly, and intuitive interface**
+- **Responsive layouts**, both **mobile-friendly** and **desktop-friendly**
+- **Fast, lightweight, and easily accessible** application on the internet
 
 ## :gear: Technologies
 
@@ -70,17 +70,17 @@ The main technologies and tools used in this project are the following:
 
 ## :bulb: Learning outcomes
 
-Building this project has proven to be a great way to learn, practice, and acquire experience with lots of interesting technologies and tools. My main learning outcomes were related to:
+Building this project has proven to be a great way to learn, practice, and acquire experience with lots of interesting technologies. My main learning outcomes were related to:
 
 - **Planning, designing, developing and deploying this application from scratch**. This includes going through possibilities, gathering resources, establishing priorities, responding to requirement changes and focusing on generating value for users.
 - Providing a **good user experience** (**UX**), by creating a lightweight, simple, and useful application.
 - Using **Agile methodologies**, in order to enhance the development efficiency and deliver high-quality upgrades incrementally.
 - Applying development **best practices**, such as clean code, separation of concerns, KISS and DRY, which are meant to keep the codebase easy to understand, maintain and extend.
-- Using **TypeScript**, **React**, and **Next.js**, which are modern frontend technologies employed in this project.
+- Using **TypeScript**, **React**, and **Next.js**, which are modern technologies employed in this project.
 - Improving **performance** of components in **React**, and using **static generation** and **server-side rendering** with **Next.js**.
-- **Manipulating dates and time ranges**, **storing the last countdown locally** for a later session, and using **gradients**.
-- **Optimizing SEO** (Search engine optimization), in order to be better indexed by search engines.
-- Using **analytics tools to understand user behavior** and apply this knowledge to prioritize future changes.
+- **Manipulating dates and time ranges**, **storing the created countdowns locally** for a later session, and using **gradients**.
+- **Optimizing SEO** (Search engine optimization) to a better indexation by search engines.
+- Using **analytics tools to understand user behavior** and apply this knowledge to prioritize changes.
 
 ## :newspaper_roll: License
 
