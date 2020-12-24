@@ -6,7 +6,7 @@
   <i>
     Counting time, from any date to any date
     <a href="https://thecountdown.vercel.app">
-      <img alt="Go to website" src="./.github/arrow-up-right.svg" align="center" >
+      <img alt="Go to website" src="./.github/arrow-up-right.svg" align="center">
     </a>
   </i>
 </p>
@@ -15,7 +15,7 @@
   <a href="https://github.com/diego-aquino">
     <img alt="Author" src="https://img.shields.io/badge/author-Diego%20Aquino-2094CA">
   </a>
-  <a href="https://github.com/diego-aquino">
+  <a href="https://github.com/diego-aquino/thecountdown">
     <img alt="Top language" src="https://img.shields.io/github/languages/top/diego-aquino/thecountdown.svg?color=2094CA">
   </a>
   <a href="./LICENSE">
@@ -25,7 +25,9 @@
   <a href="https://thecountdown.vercel.app">
     <img alt="Website status" src="https://img.shields.io/website?down_color=yellow&down_message=offline&up_message=online&up_color=2094CA&url=https%3A%2F%2Fthecountdown.vercel.app">
   </a>
-  <img alt="Website Status" src="https://img.shields.io/github/stars/diego-aquino/thecountdown.svg?style=social">
+  <a href="https://github.com/diego-aquino/thecountdown">
+    <img alt="Stars" src="https://img.shields.io/github/stars/diego-aquino/thecountdown.svg?style=social">
+  </a>
 </p>
 
 <p align="center">
@@ -37,7 +39,7 @@
   <a href="#newspaper_roll-license">License</a>
 </p>
 
-<img alt="Demonstration" src="./.github/thecountdown.gif">
+<img alt="Demonstration GIF" src="./.github/thecountdown.gif">
 
 ## :mag: Motivation
 
