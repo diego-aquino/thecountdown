@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img align="center" src=".github/logo.svg" alt="TheCountdown" width="35px"> TheCountdown
+  <img align="top" src=".github/logo.svg" alt="TheCountdown" width="35px"> TheCountdown
 </h1>
 
 <p align="center">
