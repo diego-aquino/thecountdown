@@ -37,7 +37,7 @@
   <a href="#newspaper_roll-license">License</a>
 </p>
 
-<!-- <img alt="Demonstration" src=".github/demo.gif"> -->
+<img alt="Demonstration" src="./.github/thecountdown.gif">
 
 ## :mag: Motivation
 
