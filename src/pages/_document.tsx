@@ -5,7 +5,7 @@ const siteInfo = {
   name: 'TheCountdown',
   siteURL: 'https://thecountdown.vercel.app',
   description:
-    'Wondering how much time is left for an event? Counting down to Christmas, New Year, a birthday, a release... any date? Create your countdown now!',
+    'Wondering how much time is left for an event? Counting down to Christmas, New Year, a birthday, a release... any date? Create the countdown now!',
   wideMetaImageURL: '/meta/thecountdown-wide.png',
   squareMetaImageURL: '/meta/thecountdown-square.png',
 };

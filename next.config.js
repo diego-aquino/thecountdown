@@ -20,7 +20,7 @@ function createGoogleSearchVerificationFile() {
 
 module.exports = {
   images: {
-    domains: ['avatars3.githubusercontent.com'],
+    domains: ['avatars.githubusercontent.com'],
   },
   webpack: (config, { dev, isServer }) => {
     if (!dev && isServer) {

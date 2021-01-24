@@ -73,7 +73,7 @@ The main technologies and tools used in this project are the following:
 Building this project has proven to be a great way to learn, practice, and acquire experience with lots of interesting technologies. My main learning outcomes were related to:
 
 - **Planning, designing, developing and deploying this application from scratch**. This includes going through possibilities, gathering resources, establishing priorities, responding to requirement changes and focusing on generating value for users.
-- Providing a **good user experience** (**UX**), by creating a lightweight, simple, and useful application.
+- Providing a **good user experience** (**UX**) when selecting dates and time ranges, by creating a lightweight, simple, and intuitive interface.
 - Using **Agile methodologies**, in order to enhance the development efficiency and deliver high-quality upgrades incrementally.
 - Applying development **best practices**, such as clean code, separation of concerns, KISS and DRY, which are meant to keep the codebase easy to understand, maintain and extend.
 - Using **TypeScript**, **React**, and **Next.js**, which are modern technologies employed in this project.
