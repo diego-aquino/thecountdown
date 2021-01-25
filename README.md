@@ -84,7 +84,7 @@ Building this project has proven to be a great way to learn, practice, and acqui
 
 ## :newspaper_roll: License
 
-This project if under MIT License. Check [LICENSE](./LICENSE) for more information.
+This project is under MIT License. Check [LICENSE](./LICENSE) for more information.
 
 ---
 
