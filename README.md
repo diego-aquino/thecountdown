@@ -43,17 +43,16 @@
 
 ## :mag: Motivation
 
-The idea to build this project started from a personal need to know how much time was left for an event, and getting kind of disappointed by the existing solutions I found on the internet. This personal need inspired me to create this project. :hourglass:
+The idea to build this project started from a personal need to know how much time was left for an event. This need inspired me to create [TheCountdown](https://thecountdown.vercel.app/). :hourglass:
 
-Also, developing [TheCountdown](https://thecountdown.vercel.app/) was a great way to practice my development skills by creating and publishing an application from scratch, which would solve a real problem in the world!
+Also, developing this project was a great way to practice my development skills by creating and publishing an application from scratch, which would solve a real problem in the world!
 
 ## :rocket: Features
 
-- **Flexible, interactive countdown timers**, from any date to any date
-- Good **user experience** (**UX**) and **visual feedback**
-- **Simple, user-friendly, and intuitive interface**
-- **Responsive layouts**, both **mobile-friendly** and **desktop-friendly**
-- **Fast, lightweight, and easily accessible** application on the internet
+- Flexible, interactive countdown timers, from any date to any date
+- Simple, user-friendly interface
+- Good user experience (UX) and visual feedback
+- Responsive layouts, both mobile and desktop friendly
 
 ## :gear: Technologies
 
