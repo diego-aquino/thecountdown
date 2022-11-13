@@ -11,7 +11,7 @@
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "firebase": "^8.2.0",
-    "next": "10.0.3",
+    "next": "12.1.0",
     "prebuild-webpack-plugin": "^1.1.1",
     "react": "17.0.1",
     "react-datetime-picker": "^3.0.4",
